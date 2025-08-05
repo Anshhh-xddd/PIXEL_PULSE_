@@ -1,4 +1,5 @@
 import React from 'react';
+import APinvestment from "src\Assets\AP investment.jpg"
 
 const Portfolio = () => {
   const projects = [
@@ -14,12 +15,12 @@ const Portfolio = () => {
       image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=800",
       description: "Industrial robot control interface and dashboard"
     },
-    {
-      title: "NeuralLink Pro",
-      category: "Motion Graphics",
-      image: "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "AI neural network visualization animations"
-    },
+      {
+        title: "NeuralLink Pro",
+        category: "Motion Graphics",
+        image: "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&w=800",
+        description: "AI neural network visualization animations"
+      },
     {
       title: "RoboFactory",
       category: "System Branding",
@@ -43,42 +44,126 @@ const Portfolio = () => {
   const clients = [
     {
       name: "TechCorp Industries",
-      logo: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=200",
+      logo: "src/Assets/APinvestment.jpg",
       industry: "Manufacturing",
       testimonial: "Revolutionary design that transformed our brand identity",
       rating: 5
     },
     {
       name: "Neural Dynamics",
-      logo: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=200",
+      logo: "src/Assets/ASHIRVAD_jewellwers.jpg",
       industry: "AI Research",
       testimonial: "Exceptional creativity and technical expertise",
       rating: 5
     },
     {
       name: "Quantum Systems",
-      logo: "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&w=200",
+      logo: "src/Assets/Cake_and_delight_logo.jpg",
       industry: "Quantum Computing",
       testimonial: "Outstanding results that exceeded our expectations",
       rating: 5
     },
     {
       name: "RoboWorks Inc",
-      logo: "https://images.pexels.com/photos/2582928/pexels-photo-2582928.jpeg?auto=compress&cs=tinysrgb&w=200",
+      logo: "src/Assets/Creatolive.jpg",
       industry: "Robotics",
       testimonial: "Professional team with innovative solutions",
       rating: 5
     },
     {
       name: "CyberTech Solutions",
-      logo: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=200",
+      logo: "src/Assets/Donzel_make_over.jpg",
       industry: "Cybersecurity",
       testimonial: "Creative genius combined with technical excellence",
       rating: 5
     },
     {
       name: "Future Labs",
-      logo: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=200",
+      logo: "src/Assets/Duplex_engineered.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/jay_khodiyar_process.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/logo_Rohans_second.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/LOGO_Z.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/Meenakshi_lifestyle.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/Primira_global_1.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/Proton_energy.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/pumptrock.png",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/Rajkot_marketing.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/Roohan's_makeouver.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/SHREEJI_PACKAGING.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/Vraj_solar.jpg",
+      industry: "Research & Development",
+      testimonial: "Transformed our vision into stunning reality",
+      rating: 5
+    },
+    {
+      name: "Future Labs",
+      logo: "src/Assets/Wealth_hub.jpg",
       industry: "Research & Development",
       testimonial: "Transformed our vision into stunning reality",
       rating: 5
@@ -175,11 +260,11 @@ const Portfolio = () => {
                   <div className="bg-gray-900/80 backdrop-blur-sm border border-gray-700 hover:border-orange-500/50 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-orange-500/20 transition-all duration-300 hover:scale-105 hover:-rotate-1">
                     {/* Client Logo */}
                     <div className="flex items-center justify-between mb-4 sm:mb-6">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden bg-gradient-to-br from-orange-500 to-red-500 p-1">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-gradient-to-br from-orange-500 to-red-500 p-1">
                         <img 
                           src={client.logo} 
                           alt={client.name}
-                          className="w-full h-full object-cover rounded-lg"
+                          className="w-full h-full object-contain rounded-lg bg-white"
                         />
                       </div>
                       <div className="flex space-x-1">
@@ -239,52 +324,100 @@ const Portfolio = () => {
               {[
                 {
                   name: "CyberCore",
-                  image: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: "src/Assets/APinvestment.jpg",
                   category: "AI Branding",
                   style: "Futuristic"
                 },
                 {
                   name: "NeuralTech",
-                  image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: "src/Assets/ASHIRVAD_jewellwers.jpg",
                   category: "Tech Startup",
                   style: "Minimalist"
                 },
                 {
                   name: "QuantumFlow",
-                  image: "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: "src/Assets/Cake_and_delight_logo.jpg",
                   category: "Quantum Computing",
                   style: "Abstract"
                 },
                 {
                   name: "RoboWorks",
-                  image: "https://images.pexels.com/photos/2582928/pexels-photo-2582928.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: "src/Assets/Creatolive.jpg",
                   category: "Manufacturing",
                   style: "Industrial"
                 },
                 {
                   name: "TechNova",
-                  image: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: "src/Assets/Donzel_make_over.jpg",
                   category: "Research Lab",
                   style: "Modern"
                 },
                 {
                   name: "CyberDynamics",
-                  image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: "src/Assets/Duplex_engineered.jpg",
                   category: "Cybersecurity",
                   style: "Geometric"
                 },
                 {
                   name: "FutureLabs",
-                  image: "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: "src/Assets/jay_khodiyar_process.jpg",
                   category: "Innovation",
                   style: "Dynamic"
                 },
                 {
                   name: "AutoMech",
-                  image: "https://images.pexels.com/photos/2582928/pexels-photo-2582928.jpeg?auto=compress&cs=tinysrgb&w=400",
+                  image: "src/Assets/logo_Rohans_second.jpg",
                   category: "Automation",
                   style: "Precision"
-                }
+                },
+                {
+                  name: "AutoMech",
+                  image: "src/Assets/LOGO_Z.jpg",
+                  category: "Automation",
+                  style: "Precision"
+                },
+                {
+                  name: "AutoMech",
+                  image: "src/Assets/Meenakshi_lifestyle.jpg",
+                  category: "Automation",
+                  style: "Precision"
+                },
+                {
+                  name: "AutoMech",
+                  image: "src/Assets/Primira_global_1.jpg",
+                  category: "Automation",
+                  style: "Precision"
+                },
+                {
+                  name: "AutoMech",
+                  image: "src/Assets/Rajkot_marketing.jpg",
+                  category: "Automation",
+                  style: "Precision"
+                },
+                {
+                  name: "AutoMech",
+                  image: "src/Assets/pumptrock.png",
+                  category: "Automation",
+                  style: "Precision"
+                },
+                {
+                  image: "src/Assets/Roohan's_makeouver.jpg",
+                  name: "AutoMech",
+                  category: "Automation",
+                  style: "Precision"
+                },
+                {
+                  name: "AutoMech",
+                  image: "src/Assets/SHREEJI_PACKAGING.jpg",
+                  category: "Automation",
+                  style: "Precision"
+                },
+                {
+                  name: "AutoMech",
+                  image: "src/Assets/Vraj_solar.jpg",
+                  category: "Automation",
+                  style: "Precision"
+                },
               ].map((logo, index) => (
                 <div 
                   key={index} 

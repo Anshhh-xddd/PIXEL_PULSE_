@@ -121,28 +121,24 @@ const Navbar = () => {
             </button>
           </div>
           
-          {/* Desktop Navigation - Enhanced with active section tracking */}
-          <div className="hidden lg:block">
-            <div className="ml-10 flex items-baseline space-x-6 xl:space-x-8">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`relative group text-white hover:text-orange-500 transition-all duration-300 font-medium px-4 py-3 rounded-lg hover:scale-105 transform ${
-                    activeSection === item.id 
-                      ? 'text-orange-500 bg-orange-500/10 border border-orange-500/30' 
-                      : ''
-                  }`}
-                >
-                  <span className="relative z-10">{item.label}</span>
-                  <div className="absolute inset-0 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></div>
-                  <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-black/95 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-lg border border-gray-700/50">
-                    {item.tooltip}
-                    <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black/95 rotate-45 border-l border-t border-gray-700/50"></div>
-                  </div>
-                </button>
-              ))}
-            </div>
+          {/* Navigation Links - Enhanced with smooth effects */}
+          <div className="hidden md:flex space-x-1 lg:space-x-2 xl:space-x-4">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`smooth-nav px-3 py-2 text-sm lg:text-base font-medium rounded-lg transition-all duration-300 relative group ${
+                  activeSection === item.id
+                    ? 'text-orange-500 bg-orange-500/10 border border-orange-500/20'
+                    : 'text-gray-300 hover:text-white hover:bg-orange-500/10'
+                }`}
+                title={item.tooltip}
+              >
+                <span className="relative z-10">{item.label}</span>
+                {/* Hover effect background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-orange-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
+            ))}
           </div>
 
           {/* Enhanced Mobile/Tablet Hamburger Button - Hero-style */}

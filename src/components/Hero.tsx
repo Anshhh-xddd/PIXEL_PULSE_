@@ -93,18 +93,18 @@ const Hero = () => {
           >
             <button 
               onClick={scrollToContact}
-              className="group bg-gradient-to-r from-orange-500 to-red-500 text-black px-5 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold hover:from-orange-400 hover:to-red-400 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-orange-500/25 rounded-lg transform hover:scale-105 cursor-pointer"
+              className="smooth-button group bg-gradient-to-r from-orange-500 to-red-500 text-black px-5 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-bold hover:from-orange-400 hover:to-red-400 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-orange-500/25 rounded-lg transform hover:scale-105 cursor-pointer"
             >
               {"Initialize Project".split(" ").map((word, i) => (
                 <span key={i} className="button-word inline-block mr-1">{word}</span>
               ))}
-              <ArrowRight size={18} className="arrow-icon group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight className="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
             <button 
               onClick={scrollToPortfolio}
-              className="text-white border-2 border-orange-500 px-5 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-medium hover:bg-gradient-to-r hover:from-orange-500 hover:to-red-500 hover:text-black transition-all duration-300 rounded-lg transform hover:scale-105 cursor-pointer"
+              className="smooth-button group border-2 border-orange-500 text-white px-5 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg font-medium hover:bg-orange-500 hover:text-black transition-all duration-300 flex items-center gap-2 rounded-lg transform hover:scale-105 cursor-pointer"
             >
-              {"Explore Systems".split(" ").map((word, i) => (
+              {"Explore Our Work".split(" ").map((word, i) => (
                 <span key={i} className="button-word inline-block mr-1">{word}</span>
               ))}
             </button>

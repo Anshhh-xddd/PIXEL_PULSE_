@@ -23,8 +23,12 @@ function App() {
     });
   }, []);
 
+  const handleLoadingFinish = () => {
+    setLoading(false);
+  };
+
   if (loading) {
-    return <Loader onFinish={() => setLoading(false)} />;
+    return <Loader onFinish={handleLoadingFinish} />;
   }
 
   return (
