@@ -1,34 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
       
-      // Track active section based on scroll position
-      const sections = ['home', 'services', 'portfolio', 'about', 'contact'];
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+      // Track active section based on scroll position (home page only)
+      if (location.pathname === '/') {
+        const sections = ['home', 'services', 'portfolio', 'about', 'contact'];
+        const currentSection = sections.find(section => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top <= 100 && rect.bottom >= 100;
+          }
+          return false;
+        });
+        
+        if (currentSection) {
+          setActiveSection(currentSection);
         }
-        return false;
-      });
-      
-      if (currentSection) {
-        setActiveSection(currentSection);
       }
     };
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
+
+  // Keep active state in sync with route when not on home
+  useEffect(() => {
+    if (location.pathname === '/portfolio') {
+      setActiveSection('portfolio');
+    } else if (location.pathname !== '/') {
+      setActiveSection('home');
+    }
+  }, [location.pathname]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -52,6 +66,20 @@ const Navbar = () => {
 
   // Enhanced smooth scroll function for all sections
   const scrollToSection = (sectionId: string) => {
+    if (sectionId === 'portfolio') {
+      navigate('/portfolio');
+      setIsOpen(false);
+      setActiveSection('portfolio');
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: sectionId } });
+      setIsOpen(false);
+      setActiveSection(sectionId);
+      return;
+    }
+
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ 

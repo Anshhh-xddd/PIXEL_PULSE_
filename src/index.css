@@ -398,3 +398,19 @@ html {
   box-shadow: 0 0 20px rgba(249,115,22,0.4);
   transform: scale(1.02);
 }
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee {
+  width: 200%;
+  animation: marquee 24s linear infinite;
+}
+
+/* Pause on hover for accessibility */
+.marquee:hover {
+  animation-play-state: paused;
+}

@@ -1,495 +1,223 @@
-import React from 'react';
-import APinvestment from "src\Assets\AP investment.jpg"
+import React, { useRef, useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-const Portfolio = () => {
-  const projects = [
-    {
-      title: "CyberCore AI",
-      category: "AI Brand Identity",
-      image: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Complete rebrand for autonomous robotics company"
-    },
-    {
-      title: "AutoMech Systems",
-      category: "Interface Design",
-      image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Industrial robot control interface and dashboard"
-    },
-      {
-        title: "NeuralLink Pro",
-        category: "Motion Graphics",
-        image: "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&w=800",
-        description: "AI neural network visualization animations"
-      },
-    {
-      title: "RoboFactory",
-      category: "System Branding",
-      image: "https://images.pexels.com/photos/2582928/pexels-photo-2582928.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Manufacturing automation brand ecosystem"
-    },
-    {
-      title: "QuantumBot",
-      category: "AI Brand Identity",
-      image: "https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Quantum computing robot brand identity"
-    },
-    {
-      title: "TechNova Labs",
-      category: "Interface Design",
-      image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=800",
-      description: "Research lab automation interface system"
-    }
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+interface SectionItem {
+  title: string;
+  subtitle: string;
+  image?: string;
+}
+
+const brochureItems: SectionItem[] = [
+  { title: "AI Brochure", subtitle: "Brand Story", image: "https://images.pexels.com/photos/3184433/pexels-photo-3184433.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "Tech Brochure", subtitle: "Innovation", image: "https://images.pexels.com/photos/374820/pexels-photo-374820.jpeg?auto=compress&cs=tinysrgb&w=800" },
+];
+
+const holdingItems: SectionItem[] = [
+  { title: "Holding Design", subtitle: "Billboards", image: "https://images.pexels.com/photos/234527/pexels-photo-234527.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "Event Holding", subtitle: "Exhibition", image: "https://images.pexels.com/photos/1462935/pexels-photo-1462935.jpeg?auto=compress&cs=tinysrgb&w=800" },
+];
+
+const logoItems: SectionItem[] = [
+  { title: "Minimal Logo", subtitle: "Clean Identity", image: "https://images.pexels.com/photos/4348403/pexels-photo-4348403.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "Creative Logo", subtitle: "Unique Style", image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" },
+];
+
+const packagingItems: SectionItem[] = [
+  { title: "Eco Packaging", subtitle: "Sustainable", image: "https://images.pexels.com/photos/1741231/pexels-photo-1741231.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "Luxury Box", subtitle: "Premium", image: "https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=800" },
+];
+
+const visitingCardItems: SectionItem[] = [
+  { title: "Corporate Card", subtitle: "Professional", image: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "Creative Card", subtitle: "Unique Style", image: "https://images.pexels.com/photos/37347/office-setup-business-modern-37347.jpeg?auto=compress&cs=tinysrgb&w=800" },
+];
+
+const AnimatedCard = ({ item }: { item: SectionItem }) => (
+  <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-transform hover:scale-[1.02] duration-500 ease-out bg-gray-800/40 backdrop-blur-xl border border-gray-700">
+    {item.image && (
+      <img src={item.image} alt={item.title} className="w-full h-64 object-cover" loading="lazy" />
+    )}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <div className="absolute bottom-0 left-0 p-6 text-white">
+      <h3 className="text-xl font-bold drop-shadow-md">{item.title}</h3>
+      <p className="text-sm text-orange-400 font-medium">{item.subtitle}</p>
+    </div>
+  </div>
+);
+
+const SectionWrapper = ({ title, items }: { title: string; items: SectionItem[] }) => (
+  <div className="w-screen h-full flex flex-col items-center justify-center px-8">
+    <h2 className="text-4xl font-bold text-orange-400 mb-8">{title}</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
+      {[...items, ...items, ...items].slice(0, 6).map((item, i) => (
+        <AnimatedCard key={i} item={item} />
+      ))}
+    </div>
+  </div>
+);
+
+const Portfolio: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const panelsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const progressFillRef = useRef<HTMLDivElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const labels = ["Brochure", "Holding", "Logo", "Packaging", "Visiting Cards"];
+
+  const sections = [
+    <SectionWrapper key="brochure" title="Brochure" items={brochureItems} />,
+    <SectionWrapper key="holding" title="Holding" items={holdingItems} />,
+    <SectionWrapper key="logo" title="Logo" items={logoItems} />,
+    <SectionWrapper key="packaging" title="Packaging" items={packagingItems} />,
+    <SectionWrapper key="visiting" title="Visiting Cards" items={visitingCardItems} />,
   ];
 
-  const clients = [
-    {
-      name: "TechCorp Industries",
-      logo: "src/Assets/APinvestment.jpg",
-      industry: "Manufacturing",
-      testimonial: "Revolutionary design that transformed our brand identity",
-      rating: 5
-    },
-    {
-      name: "Neural Dynamics",
-      logo: "src/Assets/ASHIRVAD_jewellwers.jpg",
-      industry: "AI Research",
-      testimonial: "Exceptional creativity and technical expertise",
-      rating: 5
-    },
-    {
-      name: "Quantum Systems",
-      logo: "src/Assets/Cake_and_delight_logo.jpg",
-      industry: "Quantum Computing",
-      testimonial: "Outstanding results that exceeded our expectations",
-      rating: 5
-    },
-    {
-      name: "RoboWorks Inc",
-      logo: "src/Assets/Creatolive.jpg",
-      industry: "Robotics",
-      testimonial: "Professional team with innovative solutions",
-      rating: 5
-    },
-    {
-      name: "CyberTech Solutions",
-      logo: "src/Assets/Donzel_make_over.jpg",
-      industry: "Cybersecurity",
-      testimonial: "Creative genius combined with technical excellence",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/Duplex_engineered.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/jay_khodiyar_process.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/logo_Rohans_second.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/LOGO_Z.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/Meenakshi_lifestyle.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/Primira_global_1.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/Proton_energy.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/pumptrock.png",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/Rajkot_marketing.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/Roohan's_makeouver.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/SHREEJI_PACKAGING.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/Vraj_solar.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    },
-    {
-      name: "Future Labs",
-      logo: "src/Assets/Wealth_hub.jpg",
-      industry: "Research & Development",
-      testimonial: "Transformed our vision into stunning reality",
-      rating: 5
-    }
-  ];
+  // Right-side SVG progress bar refs/state
+  const rightSvgRef = useRef<SVGSVGElement | null>(null);
+  const rightPathRef = useRef<SVGPathElement | null>(null);
+  const rightOrbRef = useRef<SVGCircleElement | null>(null);
+  const rightPathLenRef = useRef<number>(0);
+  const [rightMarkerPoints, setRightMarkerPoints] = useState<{ x: number; y: number }[]>([]);
+
+  const goToPanel = (index: number) => {
+    if (!containerRef.current) return;
+    const panels = panelsRef.current.filter(Boolean) as HTMLDivElement[];
+    if (panels.length === 0) return;
+
+    const totalPanels = panels.length;
+    const scrollDistance = containerRef.current.offsetWidth * (totalPanels - 1);
+    const y = containerRef.current.offsetTop + (scrollDistance * (index / (totalPanels - 1)));
+
+    gsap.to(window, { scrollTo: { y }, duration: 0.8, ease: "power2.inOut" });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      gsap.to(window, { scrollTo: { y: containerRef.current?.offsetTop || 0 }, duration: 0 });
+    }, 50);
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const panels = panelsRef.current.filter(Boolean) as HTMLDivElement[];
+    const totalPanels = panels.length;
+    const scrollDistance = containerRef.current.offsetWidth * (totalPanels - 1);
+
+    const ctx = gsap.context(() => {
+      gsap.to(panels, {
+        xPercent: -100 * (totalPanels - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          pin: true,
+          scrub: 1,
+          snap: 1 / (totalPanels - 1),
+          end: () => `+=${scrollDistance}`,
+          onUpdate: (self) => {
+            setActiveIndex(Math.round(self.progress * (totalPanels - 1)));
+            if (progressFillRef.current) {
+              gsap.to(progressFillRef.current, { height: `${self.progress * 100}%`, ease: "power2.out", duration: 0.2 });
+            }
+            // Drive right-side SVG path draw and orb position
+            if (rightPathRef.current && rightOrbRef.current) {
+              const len = rightPathLenRef.current || rightPathRef.current.getTotalLength();
+              rightPathLenRef.current = len;
+              const drawLen = len * self.progress;
+              rightPathRef.current.style.strokeDasharray = `${len}`;
+              rightPathRef.current.style.strokeDashoffset = `${len - drawLen}`;
+              const pt = rightPathRef.current.getPointAtLength(drawLen);
+              rightOrbRef.current.setAttribute('cx', `${pt.x}`);
+              rightOrbRef.current.setAttribute('cy', `${pt.y}`);
+            }
+          },
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Compute right-side markers and baseline on mount and resize
+  useEffect(() => {
+    const compute = () => {
+      if (!rightPathRef.current) return;
+      const path = rightPathRef.current;
+      const len = path.getTotalLength();
+      rightPathLenRef.current = len;
+      path.style.strokeDasharray = `${len}`;
+      path.style.strokeDashoffset = `${len}`;
+      const pts = labels.map((_, idx) => {
+        const t = labels.length > 1 ? idx / (labels.length - 1) : 0;
+        const p = path.getPointAtLength(len * t);
+        return { x: p.x, y: p.y };
+      });
+      setRightMarkerPoints(pts);
+    };
+    compute();
+    const onResize = () => {
+      compute();
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onResize);
+    };
+  }, []);
 
   return (
-    <section id="portfolio" className="py-10 sm:py-16 md:py-20 bg-black relative overflow-hidden">
-      {/* Enhanced gradient backgrounds */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-orange-500/8 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/4 via-transparent to-orange-500/4"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black"></div>
-      
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-bl from-orange-500/15 via-transparent to-orange-500/8 animate-pulse"></div>
-      
-      {/* Radial gradient for depth */}
-      <div className="absolute inset-0 bg-radial-gradient from-orange-500/4 via-transparent to-transparent"></div>
-      
-      {/* Top fade for seamless transition from Services */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent"></div>
-      
-      {/* Bottom fade for seamless transition to Contact */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent"></div>
-      
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 lg:px-8 relative z-10">
-        <div className="text-center mb-8 sm:mb-12 md:mb-20" data-aos="fade-up">
-          <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3 sm:mb-4 md:mb-6">
-            Project <span className="text-orange-500 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">Archive</span>
-          </h2>
-          <p className="text-sm sm:text-base md:text-xl text-gray-300 max-w-xs sm:max-w-2xl md:max-w-3xl mx-auto">
-            A curated database of our most advanced robotic design systems and AI-powered brand implementations.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-8">
-          {projects.map((project, index) => (
-            <div key={index} className="group cursor-pointer" data-aos="fade-up" data-aos-delay={index * 100}>
-              <div className="relative overflow-hidden bg-gray-800 aspect-square mb-3 sm:mb-4 md:mb-6 border border-gray-700 hover:border-orange-500/50 transition-colors duration-300 rounded-xl">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-orange-500/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-              <div className="space-y-0.5 sm:space-y-1 md:space-y-2">
-                <p className="text-xs sm:text-sm font-medium text-orange-500 uppercase tracking-wider">
-                  {project.category}
-                </p>
-                <h3 className="text-base sm:text-lg md:text-2xl font-bold text-white group-hover:text-orange-500 transition-colors duration-200">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed text-xs sm:text-base md:text-base">
-                  {project.description}
-                </p>
-              </div>
+    <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900">
+      <div ref={containerRef} className="relative h-screen w-screen overflow-hidden">
+        <div className="flex h-full" style={{ width: `${sections.length * 100}vw` }}>
+          {sections.map((content, index) => (
+            <div
+              key={index}
+              ref={(el) => { if (el) panelsRef.current[index] = el; }}
+              className="w-screen h-full flex items-center justify-center px-8"
+            >
+              {content}
             </div>
           ))}
         </div>
 
-        {/* Client Section with Messy Card Design */}
-        <div className="mt-20 sm:mt-24 md:mt-32">
-          <div className="text-center mb-12 sm:mb-16 md:mb-20" data-aos="fade-up">
-            <h3 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6">
-              Trusted by <span className="text-orange-500 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">Innovators</span>
-            </h3>
-            <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-xs sm:max-w-2xl md:max-w-3xl mx-auto">
-              Leading companies that trust our robotic design expertise and AI-powered solutions.
-            </p>
-          </div>
-          
-          {/* Messy Card Grid */}
-          <div className="relative">
-            {/* Background decorative elements */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-10 left-10 w-20 h-20 border border-orange-500 rotate-12"></div>
-              <div className="absolute top-20 right-20 w-16 h-16 border border-orange-500 -rotate-6"></div>
-              <div className="absolute bottom-20 left-20 w-24 h-24 border border-orange-500 rotate-45"></div>
-              <div className="absolute bottom-10 right-10 w-12 h-12 border border-orange-500 -rotate-12"></div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 relative">
-              {clients.map((client, index) => (
-                <div 
-                  key={index} 
-                  className="group relative"
-                  data-aos="fade-up" 
-                  data-aos-delay={index * 150}
-                  style={{
-                    transform: `rotate(${Math.random() * 6 - 3}deg) translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px)`,
-                  }}
-                >
-                  <div className="bg-gray-900/80 backdrop-blur-sm border border-gray-700 hover:border-orange-500/50 p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-orange-500/20 transition-all duration-300 hover:scale-105 hover:-rotate-1">
-                    {/* Client Logo */}
-                    <div className="flex items-center justify-between mb-4 sm:mb-6">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-gradient-to-br from-orange-500 to-red-500 p-1">
-                        <img 
-                          src={client.logo} 
-                          alt={client.name}
-                          className="w-full h-full object-contain rounded-lg bg-white"
-                        />
-                      </div>
-                      <div className="flex space-x-1">
-                        {[...Array(client.rating)].map((_, i) => (
-                          <div key={i} className="w-3 h-3 bg-orange-500 rounded-full"></div>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* Client Info */}
-                    <div className="space-y-2 sm:space-y-3">
-                      <h4 className="text-lg sm:text-xl font-bold text-white group-hover:text-orange-500 transition-colors duration-200">
-                        {client.name}
-                      </h4>
-                      <p className="text-sm sm:text-base text-orange-500 font-medium">
-                        {client.industry}
-                      </p>
-                      <p className="text-xs sm:text-sm text-gray-400 leading-relaxed italic">
-                        "{client.testimonial}"
-                      </p>
-                    </div>
-                    
-                    {/* Decorative elements */}
-                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-orange-500 rounded-full opacity-60"></div>
-                    <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-orange-500 rounded-full opacity-40"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Logo Design Photo Section */}
-        <div className="mt-20 sm:mt-24 md:mt-32">
-          <div className="text-center mb-12 sm:mb-16 md:mb-20" data-aos="fade-up">
-            <h3 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6">
-              Logo <span className="text-orange-500 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">Design</span> Gallery
-            </h3>
-            <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-xs sm:max-w-2xl md:max-w-3xl mx-auto">
-              Explore our collection of innovative logo designs that blend creativity with robotic precision.
-            </p>
-          </div>
-          
-          {/* Logo Design Grid */}
-          <div className="relative">
-            {/* Animated background elements */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-0 left-0 w-full h-full">
-                <div className="absolute top-10 left-10 w-32 h-32 border border-orange-500 rotate-45 animate-pulse"></div>
-                <div className="absolute top-20 right-20 w-24 h-24 border border-orange-500 -rotate-12 animate-pulse" style={{animationDelay: '1s'}}></div>
-                <div className="absolute bottom-20 left-20 w-40 h-40 border border-orange-500 rotate-90 animate-pulse" style={{animationDelay: '2s'}}></div>
-                <div className="absolute bottom-10 right-10 w-20 h-20 border border-orange-500 -rotate-45 animate-pulse" style={{animationDelay: '3s'}}></div>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 relative">
-              {[
-                {
-                  name: "CyberCore",
-                  image: "src/Assets/APinvestment.jpg",
-                  category: "AI Branding",
-                  style: "Futuristic"
-                },
-                {
-                  name: "NeuralTech",
-                  image: "src/Assets/ASHIRVAD_jewellwers.jpg",
-                  category: "Tech Startup",
-                  style: "Minimalist"
-                },
-                {
-                  name: "QuantumFlow",
-                  image: "src/Assets/Cake_and_delight_logo.jpg",
-                  category: "Quantum Computing",
-                  style: "Abstract"
-                },
-                {
-                  name: "RoboWorks",
-                  image: "src/Assets/Creatolive.jpg",
-                  category: "Manufacturing",
-                  style: "Industrial"
-                },
-                {
-                  name: "TechNova",
-                  image: "src/Assets/Donzel_make_over.jpg",
-                  category: "Research Lab",
-                  style: "Modern"
-                },
-                {
-                  name: "CyberDynamics",
-                  image: "src/Assets/Duplex_engineered.jpg",
-                  category: "Cybersecurity",
-                  style: "Geometric"
-                },
-                {
-                  name: "FutureLabs",
-                  image: "src/Assets/jay_khodiyar_process.jpg",
-                  category: "Innovation",
-                  style: "Dynamic"
-                },
-                {
-                  name: "AutoMech",
-                  image: "src/Assets/logo_Rohans_second.jpg",
-                  category: "Automation",
-                  style: "Precision"
-                },
-                {
-                  name: "AutoMech",
-                  image: "src/Assets/LOGO_Z.jpg",
-                  category: "Automation",
-                  style: "Precision"
-                },
-                {
-                  name: "AutoMech",
-                  image: "src/Assets/Meenakshi_lifestyle.jpg",
-                  category: "Automation",
-                  style: "Precision"
-                },
-                {
-                  name: "AutoMech",
-                  image: "src/Assets/Primira_global_1.jpg",
-                  category: "Automation",
-                  style: "Precision"
-                },
-                {
-                  name: "AutoMech",
-                  image: "src/Assets/Rajkot_marketing.jpg",
-                  category: "Automation",
-                  style: "Precision"
-                },
-                {
-                  name: "AutoMech",
-                  image: "src/Assets/pumptrock.png",
-                  category: "Automation",
-                  style: "Precision"
-                },
-                {
-                  image: "src/Assets/Roohan's_makeouver.jpg",
-                  name: "AutoMech",
-                  category: "Automation",
-                  style: "Precision"
-                },
-                {
-                  name: "AutoMech",
-                  image: "src/Assets/SHREEJI_PACKAGING.jpg",
-                  category: "Automation",
-                  style: "Precision"
-                },
-                {
-                  name: "AutoMech",
-                  image: "src/Assets/Vraj_solar.jpg",
-                  category: "Automation",
-                  style: "Precision"
-                },
-              ].map((logo, index) => (
-                <div 
-                  key={index} 
-                  className="group relative"
-                  data-aos="zoom-in" 
-                  data-aos-delay={index * 100}
-                  style={{
-                    transform: `rotate(${Math.random() * 4 - 2}deg)`,
-                  }}
-                >
-                  {/* Main Logo Card */}
-                  <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-orange-500/50 rounded-2xl shadow-xl hover:shadow-orange-500/30 transition-all duration-500 hover:scale-110 hover:-rotate-1">
-                    {/* Glowing border effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-transparent to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {/* Logo Image */}
-                    <div className="relative p-6 sm:p-8">
-                      <div className="aspect-square relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-500/10 to-red-500/10">
-                        <img 
-                          src={logo.image} 
-                          alt={logo.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        {/* Overlay gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      </div>
-                      
-                      {/* Logo Info */}
-                      <div className="mt-4 sm:mt-6 text-center">
-                        <h4 className="text-lg sm:text-xl font-bold text-white group-hover:text-orange-500 transition-colors duration-300">
-                          {logo.name}
-                        </h4>
-                        <p className="text-sm text-orange-500 font-medium mt-1">
-                          {logo.category}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">
-                          {logo.style} Style
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* Floating elements */}
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-orange-500 rounded-full opacity-60 group-hover:scale-150 transition-transform duration-500"></div>
-                    <div className="absolute -bottom-1 -left-1 w-4 h-4 bg-orange-500 rounded-full opacity-40 group-hover:scale-125 transition-transform duration-500"></div>
-                    
-                    {/* Corner accent */}
-                    <div className="absolute top-0 right-0 w-0 h-0 border-l-[30px] border-l-transparent border-t-[30px] border-t-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {/* Hover glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
-                  </div>
-                  
-                  {/* Floating label */}
-                  <div className="absolute -top-3 -right-3 bg-orange-500 text-black text-xs font-bold px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                    LOGO
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Decorative connecting lines */}
-            <div className="absolute inset-0 pointer-events-none">
-              <svg className="w-full h-full opacity-20">
-                <defs>
-                  <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-                    <path d="M 100 0 L 0 0 0 100" fill="none" stroke="orange" strokeWidth="1" opacity="0.3"/>
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-              </svg>
-            </div>
-          </div>
+        {/* Navigation markers + animated SVG progress bar */}
+        <div className="absolute right-6 top-1/2 -translate-y-1/2 z-30 select-none">
+          <svg ref={rightSvgRef} viewBox="0 0 60 260" className="w-10 h-64 md:w-12 md:h-72">
+            <defs>
+              <linearGradient id="ppRightGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#f97316" />
+                <stop offset="100%" stopColor="#ef4444" />
+              </linearGradient>
+              <filter id="ppRightGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            {/* Track - subtle S curve */}
+            <path d="M30,10 C15,60 45,100 30,150 C15,190 45,220 30,250" stroke="rgba(255,255,255,0.15)" strokeWidth="8" fill="none" strokeLinecap="round" />
+            {/* Progress path with glow */}
+            <path ref={rightPathRef} d="M30,10 C15,60 45,100 30,150 C15,190 45,220 30,250" stroke="url(#ppRightGrad)" strokeWidth="4" fill="none" strokeLinecap="round" filter="url(#ppRightGlow)" style={{ strokeDasharray: 0, strokeDashoffset: 0 }} />
+            {/* Moving orb */}
+            <circle ref={rightOrbRef} cx="-100" cy="-100" r="6" fill="url(#ppRightGrad)">
+              <animate attributeName="r" values="6;7;6" dur="1.2s" repeatCount="indefinite" />
+            </circle>
+            {/* Markers */}
+            {rightMarkerPoints.map((pt, idx) => (
+              <g key={idx} onClick={() => goToPanel(idx)} className="cursor-pointer">
+                <circle cx={pt.x} cy={pt.y} r={activeIndex === idx ? 5 : 4} fill={activeIndex === idx ? '#f97316' : '#6b7280'} stroke={activeIndex === idx ? '#fb923c' : '#4b5563'} strokeWidth={2} />
+                <title>{labels[idx]}</title>
+              </g>
+            ))}
+          </svg>
         </div>
       </div>
     </section>
