@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Github, Twitter, Linkedin, Youtube, Instagram } from 'lucide-react';
 
 const Footer = () => {
   const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -101,17 +101,17 @@ const Footer = () => {
             </p>
             <div className="flex space-x-3 sm:space-x-4 md:space-x-6 mt-4 sm:mt-6 md:mt-8">
               <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">
-                <Github size={24} />
+                <Instagram size={24} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">
+              {/* <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">
                 <Twitter size={24} />
-              </a>
+              </a> */}
               <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">
                 <Linkedin size={24} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">
+              {/* <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors duration-200">
                 <Youtube size={24} />
-              </a>
+              </a> */}
             </div>
           </div>
           <div data-aos="fade-up" data-aos-delay="200">
