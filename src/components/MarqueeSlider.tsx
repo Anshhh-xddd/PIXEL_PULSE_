@@ -1,36 +1,149 @@
-import React from 'react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const brands = [
-  'src/Assets/APinvestment.jpg',
-  'src/Assets/Creatolive.jpg',
-  'src/Assets/Cake_and_delight_logo.jpg',
-  'src/Assets/logo_Rohans_second.jpg',
-  'src/Assets/LOGO_Z.jpg',
-  'src/Assets/Meenakshi_lifestyle.jpg',
-  'src/Assets/Primira_global_1.jpg',
-  'src/Assets/Proton_energy.jpg',
-  'src/Assets/Vraj_solar.jpg',
-  'src/Assets/SHREEJI_PACKAGING.jpg'
+  "src/Assets/APinvestment.jpg",
+  "src/Assets/Creatolive.jpg",
+  "src/Assets/Cake_and_delight_logo.jpg",
+  "src/Assets/logo_Rohans_second.jpg",
+  "src/Assets/LOGO_Z.jpg",
+  "src/Assets/Meenakshi_lifestyle.jpg",
+  "src/Assets/Primira_global_1.jpg",
+  "src/Assets/Proton_energy.jpg",
+  "src/Assets/Vraj_solar.jpg",
+  "src/Assets/SHREEJI_PACKAGING.jpg",
 ];
+
+type BrandCardProps = { src: string };
+
+const BrandCard: React.FC<BrandCardProps> = ({ src }) => {
+  const [transformStyle, setTransformStyle] = useState<string>("rotateX(0deg) rotateY(0deg)");
+  const [shineStyle, setShineStyle] = useState<React.CSSProperties>({ opacity: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handlePointerMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isHovering) return;
+
+    const cardElement = e.currentTarget;
+    const rect = cardElement.getBoundingClientRect();
+    const localX = e.clientX - rect.left;
+    const localY = e.clientY - rect.top;
+
+    const normalizedX = (localX / rect.width) * 2 - 1;
+    const normalizedY = (localY / rect.height) * 2 - 1;
+
+    const maxTiltDegrees = 10;
+    const rotateY = normalizedX * maxTiltDegrees;
+    const rotateX = -normalizedY * maxTiltDegrees;
+
+    setTransformStyle(`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`);
+
+    setShineStyle({
+      opacity: 0.45,
+      background: `radial-gradient(400px circle at ${localX}px ${localY}px,
+        rgba(249,115,22,0.35),
+        rgba(249,115,22,0.12) 25%,
+        transparent 60%)`,
+    });
+  };
+
+  const handlePointerEnter = () => {
+    setIsHovering(true);
+    setTransformStyle("rotateX(0deg) rotateY(0deg) scale(1.1)");
+  };
+
+  const handlePointerLeave = () => {
+    setIsHovering(false);
+    setTransformStyle("rotateX(0deg) rotateY(0deg) scale(1)");
+    setShineStyle({ opacity: 0 });
+  };
+
+  return (
+    <motion.div
+      className="shrink-0 tilt-wrapper my-2 transition-all duration-300 ease-out hover:mt-6 hover:mb-2"
+      initial={{ y: 0 }}
+      animate={{ y: [0, -8, 0] }}
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+    >
+      <div
+        className="relative z-10 tilt-card"
+        onMouseMove={handlePointerMove}
+        onMouseEnter={handlePointerEnter}
+        onMouseLeave={handlePointerLeave}
+        style={{
+          transform: transformStyle,
+          transition: "transform 0.25s ease-out",
+        }}
+      >
+        <div
+          className="relative bg-gradient-to-br from-gray-900/85 to-black/90 
+                     backdrop-blur-md rounded-2xl p-10 
+                     shadow-xl border border-orange-500/30 
+                     transition-all duration-500 ease-out 
+                     hover:border-orange-500/70 
+                     hover:shadow-[0_0_40px_12px_rgba(249,115,22,0.45)] hover:-translate-y-1 md:hover:-translate-y-2"
+        >
+          {/* Enlarged Card Container */}
+          <div
+            className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-60 lg:h-60 
+                       bg-black/40 backdrop-blur-sm rounded-xl p-3 sm:p-4 
+                       shadow-inner border border-gray-700/40 
+                       flex items-center justify-center 
+                       transition-all duration-500 
+                       group-hover:border-orange-500/60"
+          >
+            <img
+              src={src}
+              className="w-full h-full object-contain rounded-lg 
+                         transition-transform duration-500 ease-out 
+                         group-hover:scale-110"
+              alt="brand"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Shine overlay */}
+          <div
+            className="absolute inset-0 rounded-2xl pointer-events-none 
+                       transition-opacity duration-500 mix-blend-screen"
+            style={shineStyle}
+          ></div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const MarqueeSlider: React.FC = () => {
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-black relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
-        <h3 className="text-center text-white text-2xl md:text-4xl font-bold mb-8">Trusted by great brands</h3>
+    <section
+      className="w-full h-screen bg-black relative overflow-hidden flex flex-col justify-center"
+    >
+      {/* Background aura */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-black to-gray-950"></div>
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[140%] h-[300px] 
+                      bg-gradient-radial from-orange-500/20 via-transparent to-transparent blur-3xl opacity-40"></div>
+
+      <div className="w-full h-full flex flex-col justify-center items-center relative z-10 px-4">
+        <h3 className="text-center text-white text-3xl md:text-5xl font-bold mb-16">
+          Trusted by <span className="text-orange-500">Great Brands</span>
+        </h3>
+
+        {/* Smooth Infinite Marquee Full Width */}
         <div className="relative w-full overflow-hidden">
-          <div className="marquee flex items-center gap-8">
+          <motion.div
+            className="flex gap-12 mt-4 md:mt-6"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          >
             {[...brands, ...brands].map((src, i) => (
-              <div key={i} className="h-16 sm:h-20 md:h-24 w-auto flex items-center justify-center shrink-0">
-                <img src={src} className="h-full w-auto object-contain rounded-lg bg-white" alt="brand" loading="lazy" />
-              </div>
+              <BrandCard key={i} src={src} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 };
 
-export default MarqueeSlider; 
+export default MarqueeSlider;

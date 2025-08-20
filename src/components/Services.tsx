@@ -6,6 +6,12 @@
   import { BsVectorPen } from "react-icons/bs";
   import { MdOutlineCameraAlt } from "react-icons/md";
   import { TbTargetArrow } from "react-icons/tb";
+  import { MdSlowMotionVideo } from "react-icons/md";
+  import { FaMeta } from "react-icons/fa6";
+  import { CgWebsite } from "react-icons/cg";
+  import { FaFigma } from "react-icons/fa6";
+  
+
 
   const Services = () => {
     const services = [
@@ -44,6 +50,30 @@
         title: "Art Direction & Photoshoot Styling",
         description: "From concept to post-production, we curate and direct photo and video content that aligns with your brand identity, ensuring every visual is both aesthetic and strategic.",
         features: ["Elevated content, curated with vision."]
+      },
+      {
+        icon: <MdSlowMotionVideo   size={32} />,
+        title: "Motion video",
+        description: "We believe motion is more than editing—it’s the art of shaping stories, emotions, and impact. Today, we craft seamless, powerful visuals that inspire audiences. Tomorrow, we push boundaries with innovation, immersive technology, and limitless creativity—turning every frame into a future-ready experience that truly moves the world.",
+        features: ["AI-Powered Motion. Human-Crafted Emotion."]
+      },
+      {
+        icon: <FaMeta  size={32} />,
+        title: "Digital Marketing",
+        description: "Our digital marketing services help your brand grow online with smart strategies and creative campaigns. From SEO and social media to paid ads and content marketing, we focus on boosting visibility, driving traffic, and delivering real results tailored to your business.",
+        features: ["ElShaping the future of brands in the digital world."]
+      },
+      {
+        icon: <CgWebsite   size={32} />,
+        title: "Web-site Developer",
+        description: "Our website development services are focused on creating fast, responsive, and user-friendly websites that make a strong impression. We design and build custom websites that work seamlessly across devices, combining clean design with the latest technology. Whether you need a business site, portfolio, or e-commerce platform, we deliver solutions that are tailored to your goals and help your brand stand out online.",
+        features: ["Building the digital foundations of tomorrow."]
+      },
+      {
+        icon: <FaFigma  size={32} />,
+        title: "UI/UX Design",
+        description: "Our UI/UX design services focus on creating digital experiences that are not only visually appealing but also intuitive and user-friendly. We design interfaces that combine creativity with functionality, ensuring smooth navigation and meaningful interactions. From wireframes to final designs, our goal is to craft engaging experiences that keep users connected with your brand.",
+        features: ["Designing experiences that shape the future."]
       },
     ];
 

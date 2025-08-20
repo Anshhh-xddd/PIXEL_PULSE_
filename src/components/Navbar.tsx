@@ -39,6 +39,10 @@ const Navbar = () => {
   useEffect(() => {
     if (location.pathname === '/portfolio') {
       setActiveSection('portfolio');
+    } else if (location.pathname === '/about') {
+      setActiveSection('about');
+    } else if (location.pathname === '/contact') {
+      setActiveSection('contact');
     } else if (location.pathname !== '/') {
       setActiveSection('home');
     }
@@ -70,6 +74,20 @@ const Navbar = () => {
       navigate('/portfolio');
       setIsOpen(false);
       setActiveSection('portfolio');
+      return;
+    }
+
+    if (sectionId === 'about') {
+      navigate('/about');
+      setIsOpen(false);
+      setActiveSection('about');
+      return;
+    }
+
+    if (sectionId === 'contact') {
+      navigate('/contact');
+      setIsOpen(false);
+      setActiveSection('contact');
       return;
     }
 

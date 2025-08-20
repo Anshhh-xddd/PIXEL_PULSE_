@@ -8,6 +8,8 @@ import Loader from './components/Loader';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import PortfolioPage from './pages/PortfolioPage';
+import ContactPage from './pages/ContactPage';
+import AboutPage from './pages/AboutPage';
 
 function ScrollToSectionOnRouteChange() {
   const location = useLocation();
@@ -20,6 +22,9 @@ function ScrollToSectionOnRouteChange() {
           el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 0);
       }
+    } else {
+      // No specific section requested: ensure each route change starts at the top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [location]);
   return null;
@@ -53,6 +58,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
       <Footer />
     </div>

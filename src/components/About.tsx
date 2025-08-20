@@ -1,54 +1,89 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Zap, Bot, Globe, Cpu } from 'lucide-react';
 
 const About = () => {
+  const navigate = useNavigate();
+
+  // Stats config: add numeric value for animation
   const stats = [
-    { icon: <Bot size={24} />, number: "200+", label: "Robots Designed" },
-    { icon: <Zap size={24} />, number: "75+", label: "AI Systems" },
-    { icon: <Globe size={24} />, number: "30+", label: "Countries Deployed" },
-    { icon: <Cpu size={24} />, number: "10+", label: "Years in Robotics" }
+    { icon: <Bot size={24} />, number: 200, suffix: "+", label: "Designed" },
+    { icon: <Zap size={24} />, number: 40, suffix: "+", label: "Active client" },
+    { icon: <Globe size={24} />, number: 10, suffix: "+", label: "Countries Deployed" },
+    { icon: <Cpu size={24} />, number: 5, suffix: "+", label: "Years Of  Exprience" }
   ];
 
-  const scrollToHome = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const homeSection = document.getElementById('home');
-    if (homeSection) {
-      homeSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+  // Custom hook for animated counting when in view
+  function useCountUpWhenVisible(target: number, duration: number = 5200) {
+    const [count, setCount] = useState(0);
+    const [hasAnimated, setHasAnimated] = useState(false);
+    const [restartNonce, setRestartNonce] = useState(0);
+    const ref = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+      let observer: IntersectionObserver | null = null;
+      if (ref.current) {
+        observer = new window.IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              setHasAnimated(true);
+            }
+          },
+          { threshold: 0.4 }
+        );
+        observer.observe(ref.current);
+      }
+      return () => {
+        if (observer) observer.disconnect();
+      };
+    }, []);
+
+    useEffect(() => {
+      if (!hasAnimated && restartNonce === 0) return;
+      let raf: number | undefined;
+      const startTime = performance.now();
+      const animate = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        setCount(Math.floor(progress * target));
+        if (progress < 1) raf = requestAnimationFrame(animate);
+        else setCount(target);
+      };
+      setCount(0);
+      raf = requestAnimationFrame(animate);
+      return () => {
+        if (raf !== undefined) cancelAnimationFrame(raf);
+      };
+    }, [hasAnimated, restartNonce, target, duration]);
+
+    const restart = () => {
+      setHasAnimated(true);
+      setRestartNonce((n) => n + 1);
+    };
+
+    return [count, ref, restart] as const;
+  }
+
+  const StatNumber: React.FC<{ value: number; suffix?: string }> = ({ value, suffix = '+' }) => {
+    const [count, ref, restart] = useCountUpWhenVisible(value, 1200);
+    return (
+      <div
+        ref={ref}
+        onMouseEnter={restart}
+        className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 sm:mb-3 text-white group-hover:text-orange-500 transition-colors duration-300"
+      >
+        {count}
+        {suffix}
+      </div>
+    );
   };
 
-  const scrollToContact = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const goToAboutPage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+    navigate('/about');
   };
 
-  const scrollToPortfolio = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const portfolioSection = document.getElementById('portfolio');
-    if (portfolioSection) {
-      portfolioSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  };
-
-  const scrollToTop = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
+  // Removed unused handlers to satisfy lint rules
 
   return (
     <section id="about" className="py-10 sm:py-12 md:py-16 lg:py-20 xl:py-24 bg-gray-900 text-white relative overflow-hidden">
@@ -83,19 +118,22 @@ const About = () => {
             
             <div className="space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-7 text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-gray-300 leading-relaxed max-w-4xl mx-auto lg:mx-0">
               <p className="font-light">
-                We are a cutting-edge design studio specializing in robotic interfaces, AI branding, and automation systems that define the future of human-machine interaction.
+              At PixelPulse, we are more than a design studio. we are architects of the future. Specializing in robotic interfaces, AI-powered branding, and intelligent visual systems, we craft experiences that think, learn, and evolve. Our work bridges advanced engineering with visionary design, creating solutions that are both visually striking and functionally superior.
               </p>
               <p className="font-light">
-                Our methodology fuses advanced engineering principles with innovative design thinking, creating solutions that are both functionally superior and visually striking.
+              From Fortune 500 tech giants to innovative startups, we engineer digital and physical experiences that push the boundaries of technology and aesthetics. Whether it’s designing autonomous vehicle interfaces, industrial robots, or immersive brand ecosystems, every project is built with precision, strategy, and creativity.
               </p>
               <p className="font-light">
-                From robotics startups to Fortune 500 tech giants, we've engineered visual systems for autonomous vehicles, industrial robots, and AI-powered platforms worldwide.
+              With over 5 years of experience, 200+ designs, and deployments in 10+ countries, PixelPulse is dedicated to shaping the future of human-machine interaction and digital brand experiences.
+              </p>
+              <p className="font-light">
+              Crafting your visual identity—PixelPulse, where robotics, AI, and design converge to create the extraordinary.
               </p>
             </div>
             
             <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-14 flex justify-center lg:justify-start gap-4">
               <button 
-                onClick={scrollToHome}
+                onClick={goToAboutPage}
                 className="group bg-gradient-to-r from-orange-500 to-red-500 text-black px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-bold hover:from-orange-400 hover:to-red-400 transition-all duration-300 rounded-xl shadow-lg shadow-orange-500/25 transform hover:scale-105 cursor-pointer w-full sm:w-auto"
               >
                 Explore Our Systems
@@ -122,9 +160,7 @@ const About = () => {
                   <div className="text-orange-500 mb-3 sm:mb-4 md:mb-5 lg:mb-6 flex justify-center group-hover:scale-110 transition-transform duration-300">
                     {stat.icon}
                   </div>
-                  <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 sm:mb-3 text-white group-hover:text-orange-500 transition-colors duration-300">
-                    {stat.number}
-                  </div>
+                  <StatNumber value={stat.number} suffix={stat.suffix} />
                   <div className="text-gray-300 font-medium text-sm sm:text-base md:text-lg lg:text-xl leading-tight">
                     {stat.label}
                   </div>

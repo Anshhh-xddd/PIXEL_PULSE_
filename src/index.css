@@ -406,11 +406,22 @@ html {
 }
 
 .marquee {
-  width: 200%;
-  animation: marquee 24s linear infinite;
+  width: 300%;
+  animation: marquee 30s linear infinite;
 }
 
 /* Pause on hover for accessibility */
 .marquee:hover {
   animation-play-state: paused;
+}
+
+/* Perspective and tilt helpers for interactive cards */
+.tilt-wrapper {
+  perspective: 1000px;
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 300ms ease-out;
 }
