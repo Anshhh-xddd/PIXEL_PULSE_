@@ -129,9 +129,9 @@ Best regards,
         <section className="pb-16 md:pb-20">
           <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center" data-aos="fade-up">
             {[
-              { label: 'Projects Completed', value: '120+' },
+              { label: 'Projects Completed', value: '200+' },
               { label: 'Brands Served', value: '60+' },
-              { label: 'Average NPS', value: '92' },
+              { label: 'Active Client', value: '40+' },
               { label: 'Years in Industry', value: '5+' },
             ].map((stat, i) => {
               const numeric = parseInt(String(stat.value).replace(/[^0-9]/g, ''), 10) || 0;

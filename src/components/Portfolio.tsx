@@ -2,58 +2,113 @@ import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 interface SectionItem {
   title: string;
   subtitle: string;
-  image?: string;
+  image: string;
 }
 
 const brochureItems: SectionItem[] = [
-  { title: "AI Brochure", subtitle: "Brand Story", image: "https://images.pexels.com/photos/3184433/pexels-photo-3184433.jpeg?auto=compress&cs=tinysrgb&w=800" },
-  { title: "Tech Brochure", subtitle: "Innovation", image: "https://images.pexels.com/photos/374820/pexels-photo-374820.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "AP Investment", subtitle: "Financial Branding", image: "/src/Assets/APinvestment.jpg" },
+  { title: "Ashirvad Jewellers", subtitle: "Luxury Brand Design", image: "/src/Assets/ASHIRVAD_jewellwers.jpg" },
+  { title: "Cake & Delight", subtitle: "Food & Beverage", image: "/src/Assets/Cake_and_delight_logo.jpg" },
 ];
 
 const holdingItems: SectionItem[] = [
-  { title: "Holding Design", subtitle: "Billboards", image: "https://images.pexels.com/photos/234527/pexels-photo-234527.jpeg?auto=compress&cs=tinysrgb&w=800" },
-  { title: "Event Holding", subtitle: "Exhibition", image: "https://images.pexels.com/photos/1462935/pexels-photo-1462935.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "Creatolive", subtitle: "Creative Agency", image: "/src/Assets/Creatolive.jpg" },
+  { title: "Donzel Makeover", subtitle: "Beauty & Fashion", image: "/src/Assets/Donzel_make_over.jpg" },
+  { title: "Duplex Engineered", subtitle: "Engineering Solutions", image: "/src/Assets/Duplex_engineered.jpg" },
 ];
 
 const logoItems: SectionItem[] = [
-  { title: "Minimal Logo", subtitle: "Clean Identity", image: "https://images.pexels.com/photos/4348403/pexels-photo-4348403.jpeg?auto=compress&cs=tinysrgb&w=800" },
-  { title: "Creative Logo", subtitle: "Unique Style", image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "Jay Khodiyar", subtitle: "Process Industry", image: "/src/Assets/jay_khodiyar_process.jpg" },
+  { title: "Rohan's Makeover", subtitle: "Beauty Brand", image: "/src/Assets/Roohan's_makeouver.jpg" },
+  { title: "Logo Z", subtitle: "Modern Identity", image: "/src/Assets/LOGO_Z.jpg" },
 ];
 
 const packagingItems: SectionItem[] = [
-  { title: "Eco Packaging", subtitle: "Sustainable", image: "https://images.pexels.com/photos/1741231/pexels-photo-1741231.jpeg?auto=compress&cs=tinysrgb&w=800" },
-  { title: "Luxury Box", subtitle: "Premium", image: "https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "Meenakshi Lifestyle", subtitle: "Lifestyle Brand", image: "/src/Assets/Meenakshi_lifestyle.jpg" },
+  { title: "Primira Global", subtitle: "Global Solutions", image: "/src/Assets/Primira_global_1.jpg" },
+  { title: "Proton Energy", subtitle: "Energy Sector", image: "/src/Assets/Proton_energy.jpg" },
 ];
 
 const visitingCardItems: SectionItem[] = [
-  { title: "Corporate Card", subtitle: "Professional", image: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=800" },
-  { title: "Creative Card", subtitle: "Unique Style", image: "https://images.pexels.com/photos/37347/office-setup-business-modern-37347.jpeg?auto=compress&cs=tinysrgb&w=800" },
+  { title: "PumpTrock", subtitle: "Industrial Brand", image: "/src/Assets/pumptrock.png" },
+  { title: "Rajkot Marketing", subtitle: "Marketing Agency", image: "/src/Assets/Rajkot_marketing.jpg" },
+  { title: "Shreeji Packaging", subtitle: "Packaging Solutions", image: "/src/Assets/SHREEJI_PACKAGING.jpg" },
 ];
 
 const AnimatedCard = ({ item }: { item: SectionItem }) => (
-  <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-transform hover:scale-[1.02] duration-500 ease-out bg-gray-800/40 backdrop-blur-xl border border-gray-700">
-    {item.image && (
-      <img src={item.image} alt={item.title} className="w-full h-64 object-cover" loading="lazy" />
-    )}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    <div className="absolute bottom-0 left-0 p-6 text-white">
-      <h3 className="text-xl font-bold drop-shadow-md">{item.title}</h3>
-      <p className="text-sm text-orange-400 font-medium">{item.subtitle}</p>
+  <motion.div 
+    className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-gray-800/40 backdrop-blur-xl border border-gray-700"
+    whileHover={{ 
+      scale: 1.05,
+      transition: { duration: 0.3 }
+    }}
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    viewport={{ once: true }}
+  >
+    <div className="relative overflow-hidden">
+      <img 
+        src={item.image} 
+        alt={item.title} 
+        className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" 
+        loading="lazy" 
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      {/* Animated overlay */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
     </div>
-  </div>
+    
+    <div className="absolute bottom-0 left-0 p-6 text-white w-full">
+      <motion.h3 
+        className="text-xl font-bold drop-shadow-md mb-2"
+        initial={{ y: 20, opacity: 0 }}
+        whileHover={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        {item.title}
+      </motion.h3>
+      <motion.p 
+        className="text-sm text-orange-400 font-medium"
+        initial={{ y: 20, opacity: 0 }}
+        whileHover={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+      >
+        {item.subtitle}
+      </motion.p>
+    </div>
+    
+    {/* Hover effect overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+  </motion.div>
 );
 
 const SectionWrapper = ({ title, items }: { title: string; items: SectionItem[] }) => (
   <div className="w-screen h-full flex flex-col items-center justify-center px-8">
-    <h2 className="text-4xl font-bold text-orange-400 mb-8">{title}</h2>
+    <motion.h2 
+      className="text-4xl font-bold text-orange-400 mb-8 text-center"
+      initial={{ opacity: 0, y: -30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      {title}
+    </motion.h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
-      {[...items, ...items, ...items].slice(0, 6).map((item, i) => (
+      {items.map((item, i) => (
         <AnimatedCard key={i} item={item} />
       ))}
     </div>
@@ -69,10 +124,10 @@ const Portfolio: React.FC = () => {
   const labels = ["Brochure", "Holding", "Logo", "Packaging", "Visiting Cards"];
 
   const sections = [
-    <SectionWrapper key="brochure" title="Brochure" items={brochureItems} />,
-    <SectionWrapper key="holding" title="Holding" items={holdingItems} />,
-    <SectionWrapper key="logo" title="Logo" items={logoItems} />,
-    <SectionWrapper key="packaging" title="Packaging" items={packagingItems} />,
+    <SectionWrapper key="brochure" title="Brochure Design" items={brochureItems} />,
+    <SectionWrapper key="holding" title="Holding Design" items={holdingItems} />,
+    <SectionWrapper key="logo" title="Logo Design" items={logoItems} />,
+    <SectionWrapper key="packaging" title="Packaging Design" items={packagingItems} />,
     <SectionWrapper key="visiting" title="Visiting Cards" items={visitingCardItems} />,
   ];
 
