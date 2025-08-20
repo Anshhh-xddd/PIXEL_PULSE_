@@ -157,20 +157,22 @@ Best regards,
       <div className="absolute inset-0 bg-gradient-to-t from-orange-500/7 via-transparent to-transparent"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-orange-500/4 via-transparent to-orange-500/4"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black"></div>
-      
+
       {/* Animated gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/14 via-transparent to-orange-500/7 animate-pulse"></div>
-      
+
       {/* Radial gradient for depth */}
       <div className="absolute inset-0 bg-radial-gradient from-orange-500/4 via-transparent to-transparent"></div>
-      
+
       <div className="relative z-10 pt-20 pb-16">
         {/* Hero Section */}
         <div className="max-w-7xl mx-auto px-4 md:px-8 mb-16">
           <div className="text-center" data-aos="fade-up">
+
             <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
-              Get In <br />
-              <span className="text-orange-500 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+              <span className='mr-4'>  Get In
+              </span>
+              <span className="text-orange-500  bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
                 Touch
               </span>
             </h1>
@@ -195,8 +197,8 @@ Best regards,
                     </div>
                     <h3 className="text-xl font-semibold text-white">Email Us</h3>
                   </div>
-                  <a 
-                    href="mailto:pixelpulse2905@gmail.com" 
+                  <a
+                    href="mailto:pixelpulse2905@gmail.com"
                     onClick={openGmailCompose}
                     className="text-gray-300 hover:text-orange-500 transition-colors duration-200 cursor-pointer text-lg block ml-16"
                   >
@@ -298,9 +300,8 @@ Best regards,
                         autoComplete="name"
                         aria-invalid={Boolean(errors.name)}
                         aria-describedby="name-error"
-                        className={`w-full bg-black/50 backdrop-blur-sm border text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${
-                          errors.name ? 'border-red-500 focus:ring-red-500/30' : 'border-gray-700 focus:border-orange-500 focus:ring-orange-500/20'
-                        }`}
+                        className={`w-full bg-black/50 backdrop-blur-sm border text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.name ? 'border-red-500 focus:ring-red-500/30' : 'border-gray-700 focus:border-orange-500 focus:ring-orange-500/20'
+                          }`}
                       />
                       {errors.name && (
                         <p id="name-error" className="mt-1 text-sm text-red-400">{errors.name}</p>
@@ -324,9 +325,8 @@ Best regards,
                         inputMode="email"
                         aria-invalid={Boolean(errors.email)}
                         aria-describedby="email-error"
-                        className={`w-full bg-black/50 backdrop-blur-sm border text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${
-                          errors.email ? 'border-red-500 focus:ring-red-500/30' : 'border-gray-700 focus:border-orange-500 focus:ring-orange-500/20'
-                        }`}
+                        className={`w-full bg-black/50 backdrop-blur-sm border text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.email ? 'border-red-500 focus:ring-red-500/30' : 'border-gray-700 focus:border-orange-500 focus:ring-orange-500/20'
+                          }`}
                       />
                       {errors.email && (
                         <p id="email-error" className="mt-1 text-sm text-red-400">{errors.email}</p>
@@ -366,9 +366,8 @@ Best regards,
                       placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
                       aria-invalid={Boolean(errors.message)}
                       aria-describedby="message-error"
-                      className={`w-full bg-black/50 backdrop-blur-sm border text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 resize-none ${
-                        errors.message ? 'border-red-500 focus:ring-red-500/30' : 'border-gray-700 focus:border-orange-500 focus:ring-orange-500/20'
-                      }`}
+                      className={`w-full bg-black/50 backdrop-blur-sm border text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 resize-none ${errors.message ? 'border-red-500 focus:ring-red-500/30' : 'border-gray-700 focus:border-orange-500 focus:ring-orange-500/20'
+                        }`}
                     />
                     {errors.message && (
                       <p id="message-error" className="mt-1 text-sm text-red-400">{errors.message}</p>

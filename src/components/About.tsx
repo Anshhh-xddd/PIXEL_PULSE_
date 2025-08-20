@@ -118,7 +118,7 @@ const About = () => {
             
             <div className="space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-7 text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-gray-300 leading-relaxed max-w-4xl mx-auto lg:mx-0">
               <p className="font-light">
-              At PixelPulse, we are more than a design studio. we are architects of the future. Specializing in robotic interfaces, AI-powered branding, and intelligent visual systems, we craft experiences that think, learn, and evolve. Our work bridges advanced engineering with visionary design, creating solutions that are both visually striking and functionally superior.
+              At PixelPulse, we are more than a design studio. we are architects of the future. AI-powered branding, and intelligent visual systems, we craft experiences that think, learn, and evolve. Our work bridges advanced engineering with visionary design, creating solutions that are both visually striking and functionally superior.
               </p>
               <p className="font-light">
               From Fortune 500 tech giants to innovative startups, we engineer digital and physical experiences that push the boundaries of technology and aesthetics. Whether it’s designing autonomous vehicle interfaces, industrial robots, or immersive brand ecosystems, every project is built with precision, strategy, and creativity.
@@ -127,7 +127,7 @@ const About = () => {
               With over 5 years of experience, 200+ designs, and deployments in 10+ countries, PixelPulse is dedicated to shaping the future of human-machine interaction and digital brand experiences.
               </p>
               <p className="font-light">
-              Crafting your visual identity—PixelPulse, where robotics, AI, and design converge to create the extraordinary.
+              Crafting your visual identity—PixelPulse, where AI and design converge to create the extraordinary.
               </p>
             </div>
             
