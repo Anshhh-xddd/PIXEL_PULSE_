@@ -3,6 +3,17 @@ import Brochure from '../Assets/Broucher-20250821T104541Z-1-001/Broucher/Brochur
 import Brochure2 from '../Assets/Broucher-20250821T104541Z-1-001/Broucher/Brochure2.jpg';
 import Holding1 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-1.jpg';
 import Holding2 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-2.jpg';
+import Logo5 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-5.jpg';
+import Logo7 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-7.jpg';
+import MeenakshiLifestyle from '../Assets/Meenakshi_lifestyle.jpg';
+import Box4 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-4.jpeg';
+import Box5 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-5.jpeg';
+import Box6 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-6.jpeg';
+import vs1 from '../Assets/Visiting Card-20250821T104554Z-1-001/Visiting Card/Business Card.png';
+import vs2 from '../Assets/Visiting Card-20250821T104554Z-1-001/Visiting Card/Cretolive.jpg';
+import vs3 from '../Assets/Visiting Card-20250821T104554Z-1-001/Visiting Card/Radhe Fashion.jpg';
+
+
 
 export type PortfolioItem = {
   slug: string;
@@ -28,17 +39,19 @@ export const portfolioItems: PortfolioItem[] = [
   { title: 'Ashirvad Jewellers – Billboard 1', subtitle: 'Billboard', image: Holding1, category: 'holding', slug: s('Holding 1') },
   { title: 'Ashirvad Jewellers – Hoarding 2', subtitle: 'Billboard', image: Holding2, category: 'holding', slug: s('Holding 2') },
 
-  { title: 'Jay Khodiyar', subtitle: 'Process Industry', image: '/src/Assets/jay_khodiyar_process.jpg', category: 'logo', slug: s('Jay Khodiyar') },
-  { title: "Rohan's Makeover", subtitle: 'Beauty Brand', image: "/src/Assets/Roohan's_makeouver.jpg", category: 'logo', slug: s("Rohan's Makeover") },
-  { title: 'Logo Z', subtitle: 'Modern Identity', image: '/src/Assets/LOGO_Z.jpg', category: 'logo', slug: s('Logo Z') },
+ 
+  { title: 'Vrindavan Chaat Bhandar', subtitle: 'Food & Beverage', image: Logo5, category: 'logo', slug: s('Vrindavan Chaat Bhandar') },
+  { title: 'Radhe Fashion', subtitle: 'Apparel Brand', image: Logo7, category: 'logo', slug: s('Radhe Fashion') },
+  { title: 'Meenakshi Lifestyle Logo', subtitle: 'Lifestyle Brand', image: MeenakshiLifestyle, category: 'logo', slug: s('Meenakshi Lifestyle Logo') },
 
-  { title: 'Meenakshi Lifestyle', subtitle: 'Lifestyle Brand', image: '/src/Assets/Meenakshi_lifestyle.jpg', category: 'packaging', slug: s('Meenakshi Lifestyle') },
-  { title: 'Primira Global', subtitle: 'Global Solutions', image: '/src/Assets/Primira_global_1.jpg', category: 'packaging', slug: s('Primira Global') },
-  { title: 'Proton Energy', subtitle: 'Energy Sector', image: '/src/Assets/Proton_energy.jpg', category: 'packaging', slug: s('Proton Energy') },
-
-  { title: 'PumpTrock', subtitle: 'Industrial Brand', image: '/src/Assets/pumptrock.png', category: 'visiting', slug: s('PumpTrock') },
-  { title: 'Rajkot Marketing', subtitle: 'Marketing Agency', image: '/src/Assets/Rajkot_marketing.jpg', category: 'visiting', slug: s('Rajkot Marketing') },
-  { title: 'Shreeji Packaging', subtitle: 'Packaging Solutions', image: '/src/Assets/SHREEJI_PACKAGING.jpg', category: 'visiting', slug: s('Shreeji Packaging') },
+ 
+  { title: 'Dplus Architectural Hardware - Red', subtitle: 'Packaging Design', image: Box4, category: 'packaging', slug: s('Dplus Architectural Hardware - Red') },
+  { title: 'Dplus Architectural Hardware - Beige', subtitle: 'Packaging Design', image: Box5, category: 'packaging', slug: s('Dplus Architectural Hardware - Beige') },
+  { title: 'Dplus Architectural Hardware - Black', subtitle: 'Packaging Design', image: Box6, category: 'packaging', slug: s('Dplus Architectural Hardware - Black') },
+ 
+  { title: 'PumpTrock', subtitle: 'Industrial Brand', image: vs1 , category: 'visiting', slug: s('PumpTrock') },
+  { title: 'Rajkot Marketing', subtitle: 'Marketing Agency', image: vs2 , category: 'visiting', slug: s('Rajkot Marketing') },
+  { title: 'Shreeji Packaging', subtitle: 'Packaging Solutions', image: vs3 , category: 'visiting', slug: s('Shreeji Packaging') },
 ];
 
 export const sectionByCategory: Record<PortfolioItem['category'], PortfolioItem[]> = {

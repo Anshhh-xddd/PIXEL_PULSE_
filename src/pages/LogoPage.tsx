@@ -10,6 +10,9 @@ import image6 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-6.jpg';
 import image7 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-7.jpg';
 import image9 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-9.jpg';
 import rohansMakeover from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-8.jpg';
+import logo5 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-5.jpg';
+import logo6 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-6.jpg';
+import logo7 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-7.jpg';
 
 const LogoPage: React.FC = () => {
   const baseItems: PortfolioItem[] = sectionByCategory.logo.filter(
@@ -48,6 +51,12 @@ const LogoPage: React.FC = () => {
       description: 'Elegant and luxurious logo for Ashirvad Jewellers, capturing the essence of fine craftsmanship.',
     },
     {
+      image: image9,
+      title: 'Riyal Solar Energy',
+      subtitle: 'Renewable Energy',
+      description: 'Clean and energetic logo for Riyal Solar Energy, symbolizing sustainability and power.',
+    },
+    {
       image: image4,
       title: 'Khodiyar Process',
       subtitle: 'Manufacturing',
@@ -78,11 +87,24 @@ const LogoPage: React.FC = () => {
       description: "A graceful and creative logo for Roohan's Make me up, highlighting beauty and transformation.",
     },
     {
-      image: image9,
-      title: 'Riyal Solar Energy',
-      subtitle: 'Renewable Energy',
-      description: 'Clean and energetic logo for Riyal Solar Energy, symbolizing sustainability and power.',
+      image: logo5,
+      title: 'New Logo 5',
+      subtitle: 'New Category',
+      description: 'Description for new logo 5.',
     },
+    {
+      image: logo6,
+      title: 'New Logo 6',
+      subtitle: 'New Category',
+      description: 'Description for new logo 6.',
+    },
+    {
+      image: logo7,
+      title: 'New Logo 7',
+      subtitle: 'New Category',
+      description: 'Description for new logo 7.',
+    },
+   
   ];
   const baseTs = Date.now();
   const featured: PortfolioItem[] = featuredData.map((d: any, idx) => ({
