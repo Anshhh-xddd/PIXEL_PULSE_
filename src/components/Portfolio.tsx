@@ -17,7 +17,7 @@ const visitingCardItems: PortfolioItem[] = sectionByCategory.visiting;
 const AnimatedCard = ({ item }: { item: PortfolioItem }) => {
   return (
   <motion.div 
-    className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-gray-800/40 backdrop-blur-xl border border-gray-700"
+    className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-gray-900/50 backdrop-blur-xl border border-gray-800 hover:border-gray-600/60"
     whileHover={{ 
       scale: 1.05,
       transition: { duration: 0.3 }
@@ -27,47 +27,21 @@ const AnimatedCard = ({ item }: { item: PortfolioItem }) => {
     transition={{ duration: 0.6 }}
     viewport={{ once: true }}
   >
-    <div className="relative overflow-hidden">
-      <motion.img 
-        layoutId={`portfolio-image-${item.slug}`}
+    <div className="relative w-full h-56 sm:h-64 md:h-72 overflow-hidden bg-black">
+      <img 
         src={item.image} 
         alt={item.title} 
-        className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" 
         loading="lazy" 
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
-      {/* Animated overlay */}
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20"
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </div>
-    
-    <div className="absolute bottom-0 left-0 p-6 text-white w-full text-left">
-      <motion.h3 
-        layoutId={`portfolio-title-${item.slug}`}
-        className="text-xl font-bold drop-shadow-md mb-2"
-        initial={{ y: 20, opacity: 0 }}
-        whileHover={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        {item.title}
-      </motion.h3>
-      <motion.p 
-        className="text-sm text-orange-400 font-medium"
-        initial={{ y: 20, opacity: 0 }}
-        whileHover={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
-      >
-        {item.subtitle}
-      </motion.p>
+
+    <div className="p-4">
+      <div className="text-white text-lg font-semibold leading-tight">{item.title}</div>
+      <div className="text-gray-400 text-xs font-medium mt-0.5">{item.subtitle}</div>
     </div>
-    
-    {/* Hover effect overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
   </motion.div>
 );
 };

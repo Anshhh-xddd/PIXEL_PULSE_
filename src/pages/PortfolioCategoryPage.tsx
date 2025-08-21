@@ -40,6 +40,8 @@ const PortfolioCategoryPage: React.FC = () => {
           {/* Pinterest-like masonry: multi-column layout with explicit column gap */}
           <div className="columns-1 sm:columns-2 lg:columns-3" style={{ columnGap: '1rem' }}>
             {items.map((p, i) => {
+              const ratios = ['pt-[72%]','pt-[56%]','pt-[100%]','pt-[130%]'];
+              const aspect = ratios[i % ratios.length];
               return (
                 <figure
                   key={p.slug}
@@ -50,15 +52,14 @@ const PortfolioCategoryPage: React.FC = () => {
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveIndex(i); }}
                   className="mb-4 md:mb-6 break-inside-avoid relative rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:border-orange-500/40 transition select-none shadow-lg hover:shadow-orange-500/10"
                 >
-                  <div className="relative w-full">
+                  <div className={`relative w-full ${aspect}`}>
                     <img
                       src={p.image}
                       alt={p.title}
                       loading="lazy"
-                      decoding="async"
-                      className="block w-full h-auto object-cover will-change-transform transition-transform duration-500 group-hover:scale-[1.02]"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <figcaption className="p-4">
                     <div className="text-white text-lg font-extrabold tracking-tight leading-tight">{p.title}</div>
