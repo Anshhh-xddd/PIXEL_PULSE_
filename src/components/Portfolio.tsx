@@ -59,11 +59,18 @@ const SectionWrapper = ({ title, items, category }: { title: string; items: Port
         {title}
       </motion.h2>
       {category && (
-        <a href={`/portfolio/category/${category}`} className="text-sm text-orange-400 underline">View all</a>
+        (() => {
+          const href = category === 'brochure' ? '/portfolio/brochure'
+            : category === 'holding' ? '/portfolio/holding'
+            : category === 'logo' ? '/portfolio/logo'
+            : `/portfolio/category/${category}`;
+          return <a href={href} className="text-sm text-orange-400 underline">View all</a>;
+        })()
       )}
     </div>
+    {/* Preview only first three items; full list available via View all */}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
-      {items.map((item, i) => (
+      {items.slice(0, 3).map((item, i) => (
         <AnimatedCard key={i} item={item} />
       ))}
     </div>

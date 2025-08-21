@@ -1,3 +1,9 @@
+ 
+import Brochure from '../Assets/Broucher-20250821T104541Z-1-001/Broucher/Brochure.jpg';
+import Brochure2 from '../Assets/Broucher-20250821T104541Z-1-001/Broucher/Brochure2.jpg';
+import Holding1 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-1.jpg';
+import Holding2 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-2.jpg';
+
 export type PortfolioItem = {
   slug: string;
   title: string;
@@ -15,13 +21,12 @@ const s = (str: string) =>
     .replace(/\s+/g, '-');
 
 export const portfolioItems: PortfolioItem[] = [
-  { title: 'AP Investment', subtitle: 'Financial Branding', image: '/src/Assets/APinvestment.jpg', category: 'brochure', slug: s('AP Investment') },
-  { title: 'Ashirvad Jewellers', subtitle: 'Luxury Brand Design', image: '/src/Assets/ASHIRVAD_jewellwers.jpg', category: 'brochure', slug: s('Ashirvad Jewellers') },
-  { title: 'Cake & Delight', subtitle: 'Food & Beverage', image: '/src/Assets/Cake_and_delight_logo.jpg', category: 'brochure', slug: s('Cake & Delight') },
+  { title: 'A Textbook of Power Plant Engineering – Brochure', subtitle: 'Book Cover Design', image: Brochure , category: 'brochure', slug: s('AP Investment') },
+  { title: 'PumpTork – Product Brochure', subtitle: 'Brochure / Cover + Contact Page ', image: Brochure2, category: 'brochure', slug: s('Ashirvad Jewellers') },
+  // { title: 'Cake & Delight', subtitle: 'Food & Beverage', image: '/src/Assets/Cake_and_delight_logo.jpg', category: 'brochure', slug: s('Cake & Delight') },
 
-  { title: 'Creatolive', subtitle: 'Creative Agency', image: '/src/Assets/Creatolive.jpg', category: 'holding', slug: s('Creatolive') },
-  { title: 'Donzel Makeover', subtitle: 'Beauty & Fashion', image: '/src/Assets/Donzel_make_over.jpg', category: 'holding', slug: s('Donzel Makeover') },
-  { title: 'Duplex Engineered', subtitle: 'Engineering Solutions', image: '/src/Assets/Duplex_engineered.jpg', category: 'holding', slug: s('Duplex Engineered') },
+  { title: 'Ashirvad Jewellers – Billboard 1', subtitle: 'Billboard', image: Holding1, category: 'holding', slug: s('Holding 1') },
+  { title: 'Ashirvad Jewellers – Hoarding 2', subtitle: 'Billboard', image: Holding2, category: 'holding', slug: s('Holding 2') },
 
   { title: 'Jay Khodiyar', subtitle: 'Process Industry', image: '/src/Assets/jay_khodiyar_process.jpg', category: 'logo', slug: s('Jay Khodiyar') },
   { title: "Rohan's Makeover", subtitle: 'Beauty Brand', image: "/src/Assets/Roohan's_makeouver.jpg", category: 'logo', slug: s("Rohan's Makeover") },
