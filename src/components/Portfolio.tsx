@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { motion } from "framer-motion";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { sectionByCategory, PortfolioItem } from '../data/portfolio';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -15,14 +15,9 @@ const packagingItems: PortfolioItem[] = sectionByCategory.packaging;
 const visitingCardItems: PortfolioItem[] = sectionByCategory.visiting;
 
 const AnimatedCard = ({ item }: { item: PortfolioItem }) => {
-  const navigate = useNavigate();
-  const onClick = () => {
-    navigate(`/portfolio/${item.slug}`, { state: { fromGrid: true } });
-  };
   return (
-  <motion.button 
+  <motion.div 
     className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-gray-800/40 backdrop-blur-xl border border-gray-700"
-    onClick={onClick}
     whileHover={{ 
       scale: 1.05,
       transition: { duration: 0.3 }
@@ -73,7 +68,7 @@ const AnimatedCard = ({ item }: { item: PortfolioItem }) => {
     
     {/* Hover effect overlay */}
     <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-  </motion.button>
+  </motion.div>
 );
 };
 

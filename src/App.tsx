@@ -11,7 +11,7 @@ import HomePage from './pages/HomePage';
 import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
 import ServicesPage from './pages/ServicesPage';
-import PortfolioDetailPage from './pages/PortfolioDetailPage';
+// Removed PortfolioDetailPage
 import AboutPage from './pages/AboutPage';
 import PortfolioCategoryPage from './pages/PortfolioCategoryPage';
 
@@ -66,7 +66,6 @@ function App() {
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/portfolio/category/:category" element={<PortfolioCategoryPage />} />
-          <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
