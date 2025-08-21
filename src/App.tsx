@@ -6,10 +6,14 @@ import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import HomePage from './pages/HomePage';
 import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
+import ServicesPage from './pages/ServicesPage';
+import PortfolioDetailPage from './pages/PortfolioDetailPage';
 import AboutPage from './pages/AboutPage';
+import PortfolioCategoryPage from './pages/PortfolioCategoryPage';
 
 function ScrollToSectionOnRouteChange() {
   const location = useLocation();
@@ -50,17 +54,23 @@ function App() {
     return <Loader onFinish={handleLoadingFinish} />;
   }
 
+  const location = useLocation();
   return (
     <div className="min-h-screen">
       <CustomCursor />
       <Navbar />
       <ScrollToSectionOnRouteChange />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/portfolio" element={<PortfolioPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/portfolio/category/:category" element={<PortfolioCategoryPage />} />
+          <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </AnimatePresence>
       <Footer />
     </div>
   );

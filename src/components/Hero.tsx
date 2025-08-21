@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Zap, Cpu, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring, useVelocity } from 'framer-motion';
 
 const Hero = () => {
@@ -196,32 +196,6 @@ const Hero = () => {
       
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 lg:px-8 relative z-10 w-full">
         <div className="text-center">
-          {/* Animated icons */}
-          <motion.div 
-            className="flex justify-center items-center mb-6 sm:mb-8"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
-              <Cpu className="w-8 sm:w-12 md:w-16 h-8 sm:h-12 md:h-16 text-orange-500 mr-2 sm:mr-4" />
-            </motion.div>
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <Zap className="w-7 sm:w-10 md:w-12 h-7 sm:h-10 md:h-12 text-orange-400" />
-            </motion.div>
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            >
-              <Sparkles className="w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 text-orange-300 ml-2 sm:ml-4" />
-            </motion.div>
-          </motion.div>
 
           {/* Enhanced title with scroll velocity and direction animations */}
           <motion.h1 
@@ -231,10 +205,10 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             style={{
-              y: useTransform([titleY, titleVelocityY], ([y, velocityY]) => y + velocityY),
+              y: useTransform([titleY, titleVelocityY], (values: number[]) => values[0] + values[1]),
               scale: titleScale,
               opacity: titleOpacity,
-              rotateX: useTransform([titleRotateX, titleVelocityRotate], ([rotateX, velocityRotate]) => rotateX + velocityRotate),
+              rotateX: useTransform([titleRotateX, titleVelocityRotate], (values: number[]) => values[0] + values[1]),
               color: titleColor
             }}
           >
@@ -300,7 +274,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             style={{
-              y: useTransform([subtitleY, subtitleVelocityY], ([y, velocityY]) => y + velocityY),
+              y: useTransform([subtitleY, subtitleVelocityY], (values: number[]) => values[0] + values[1]),
               opacity: subtitleOpacity,
               scale: subtitleScale,
               filter: useTransform(smoothVelocity, [-1, 0, 1], [

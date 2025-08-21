@@ -3,48 +3,26 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
+import { sectionByCategory, PortfolioItem } from '../data/portfolio';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-interface SectionItem {
-  title: string;
-  subtitle: string;
-  image: string;
-}
+const brochureItems: PortfolioItem[] = sectionByCategory.brochure;
+const holdingItems: PortfolioItem[] = sectionByCategory.holding;
+const logoItems: PortfolioItem[] = sectionByCategory.logo;
+const packagingItems: PortfolioItem[] = sectionByCategory.packaging;
+const visitingCardItems: PortfolioItem[] = sectionByCategory.visiting;
 
-const brochureItems: SectionItem[] = [
-  { title: "AP Investment", subtitle: "Financial Branding", image: "/src/Assets/APinvestment.jpg" },
-  { title: "Ashirvad Jewellers", subtitle: "Luxury Brand Design", image: "/src/Assets/ASHIRVAD_jewellwers.jpg" },
-  { title: "Cake & Delight", subtitle: "Food & Beverage", image: "/src/Assets/Cake_and_delight_logo.jpg" },
-];
-
-const holdingItems: SectionItem[] = [
-  { title: "Creatolive", subtitle: "Creative Agency", image: "/src/Assets/Creatolive.jpg" },
-  { title: "Donzel Makeover", subtitle: "Beauty & Fashion", image: "/src/Assets/Donzel_make_over.jpg" },
-  { title: "Duplex Engineered", subtitle: "Engineering Solutions", image: "/src/Assets/Duplex_engineered.jpg" },
-];
-
-const logoItems: SectionItem[] = [
-  { title: "Jay Khodiyar", subtitle: "Process Industry", image: "/src/Assets/jay_khodiyar_process.jpg" },
-  { title: "Rohan's Makeover", subtitle: "Beauty Brand", image: "/src/Assets/Roohan's_makeouver.jpg" },
-  { title: "Logo Z", subtitle: "Modern Identity", image: "/src/Assets/LOGO_Z.jpg" },
-];
-
-const packagingItems: SectionItem[] = [
-  { title: "Meenakshi Lifestyle", subtitle: "Lifestyle Brand", image: "/src/Assets/Meenakshi_lifestyle.jpg" },
-  { title: "Primira Global", subtitle: "Global Solutions", image: "/src/Assets/Primira_global_1.jpg" },
-  { title: "Proton Energy", subtitle: "Energy Sector", image: "/src/Assets/Proton_energy.jpg" },
-];
-
-const visitingCardItems: SectionItem[] = [
-  { title: "PumpTrock", subtitle: "Industrial Brand", image: "/src/Assets/pumptrock.png" },
-  { title: "Rajkot Marketing", subtitle: "Marketing Agency", image: "/src/Assets/Rajkot_marketing.jpg" },
-  { title: "Shreeji Packaging", subtitle: "Packaging Solutions", image: "/src/Assets/SHREEJI_PACKAGING.jpg" },
-];
-
-const AnimatedCard = ({ item }: { item: SectionItem }) => (
-  <motion.div 
+const AnimatedCard = ({ item }: { item: PortfolioItem }) => {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate(`/portfolio/${item.slug}`, { state: { fromGrid: true } });
+  };
+  return (
+  <motion.button 
     className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-gray-800/40 backdrop-blur-xl border border-gray-700"
+    onClick={onClick}
     whileHover={{ 
       scale: 1.05,
       transition: { duration: 0.3 }
@@ -55,7 +33,8 @@ const AnimatedCard = ({ item }: { item: SectionItem }) => (
     viewport={{ once: true }}
   >
     <div className="relative overflow-hidden">
-      <img 
+      <motion.img 
+        layoutId={`portfolio-image-${item.slug}`}
         src={item.image} 
         alt={item.title} 
         className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" 
@@ -72,8 +51,9 @@ const AnimatedCard = ({ item }: { item: SectionItem }) => (
       />
     </div>
     
-    <div className="absolute bottom-0 left-0 p-6 text-white w-full">
+    <div className="absolute bottom-0 left-0 p-6 text-white w-full text-left">
       <motion.h3 
+        layoutId={`portfolio-title-${item.slug}`}
         className="text-xl font-bold drop-shadow-md mb-2"
         initial={{ y: 20, opacity: 0 }}
         whileHover={{ y: 0, opacity: 1 }}
@@ -93,20 +73,26 @@ const AnimatedCard = ({ item }: { item: SectionItem }) => (
     
     {/* Hover effect overlay */}
     <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-  </motion.div>
+  </motion.button>
 );
+};
 
-const SectionWrapper = ({ title, items }: { title: string; items: SectionItem[] }) => (
+const SectionWrapper = ({ title, items, category }: { title: string; items: PortfolioItem[]; category?: string }) => (
   <div className="w-screen h-full flex flex-col items-center justify-center px-8">
-    <motion.h2 
-      className="text-4xl font-bold text-orange-400 mb-8 text-center"
-      initial={{ opacity: 0, y: -30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-    >
-      {title}
-    </motion.h2>
+    <div className="flex items-center justify-between w-full max-w-6xl mb-8">
+      <motion.h2 
+        className="text-4xl font-bold text-orange-400"
+        initial={{ opacity: 0, y: -30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
+        {title}
+      </motion.h2>
+      {category && (
+        <a href={`/portfolio/category/${category}`} className="text-sm text-orange-400 underline">View all</a>
+      )}
+    </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
       {items.map((item, i) => (
         <AnimatedCard key={i} item={item} />
@@ -124,11 +110,11 @@ const Portfolio: React.FC = () => {
   const labels = ["Brochure", "Holding", "Logo", "Packaging", "Visiting Cards"];
 
   const sections = [
-    <SectionWrapper key="brochure" title="Brochure Design" items={brochureItems} />,
-    <SectionWrapper key="holding" title="Holding Design" items={holdingItems} />,
-    <SectionWrapper key="logo" title="Logo Design" items={logoItems} />,
-    <SectionWrapper key="packaging" title="Packaging Design" items={packagingItems} />,
-    <SectionWrapper key="visiting" title="Visiting Cards" items={visitingCardItems} />,
+    <SectionWrapper key="brochure" title="Brochure Design" items={brochureItems} category="brochure" />,
+    <SectionWrapper key="holding" title="Holding Design" items={holdingItems} category="holding" />,
+    <SectionWrapper key="logo" title="Logo Design" items={logoItems} category="logo" />,
+    <SectionWrapper key="packaging" title="Packaging Design" items={packagingItems} category="packaging" />,
+    <SectionWrapper key="visiting" title="Visiting Cards" items={visitingCardItems} category="visiting" />,
   ];
 
   // Right-side SVG progress bar refs/state

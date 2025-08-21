@@ -47,7 +47,8 @@ const Navbar = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (location.pathname === '/portfolio') setActiveSection('portfolio');
+    if (location.pathname === '/services') setActiveSection('services');
+    else if (location.pathname === '/portfolio') setActiveSection('portfolio');
     else if (location.pathname === '/about') setActiveSection('about');
     else if (location.pathname === '/contact') setActiveSection('contact');
     else if (location.pathname !== '/') setActiveSection('home');
@@ -80,7 +81,7 @@ const Navbar = () => {
   };
 
   const scrollToSection = (sectionId: string) => {
-    if (['portfolio', 'about', 'contact'].includes(sectionId)) {
+    if (['services', 'portfolio', 'about', 'contact'].includes(sectionId)) {
       navigate(`/${sectionId}`);
       setIsOpen(false);
       setActiveSection(sectionId);
