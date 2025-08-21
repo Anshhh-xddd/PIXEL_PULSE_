@@ -256,12 +256,6 @@ const Navbar = () => {
                 alt="PixelPulse Logo" 
                 className="h-8 sm:h-10 md:h-12 lg:h-14 transition-all duration-300 group-hover:drop-shadow-glow" 
               />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg opacity-0 group-hover:opacity-100"
-                initial={{ scale: 0.8 }}
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-              />
             </div>
           </motion.div>
 

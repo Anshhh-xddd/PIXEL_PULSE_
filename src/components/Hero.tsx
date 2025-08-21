@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Zap, Cpu, Sparkles } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring, useVelocity } from 'framer-motion';
 
@@ -6,6 +6,11 @@ const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  // Create motion values for mouse position
+  const mouseX = useSpring(mousePosition.x, { stiffness: 100, damping: 30 });
+  const mouseY = useSpring(mousePosition.y, { stiffness: 100, damping: 30 });
 
   // Scroll tracking for the entire hero section
   const { scrollYProgress } = useScroll({
@@ -46,17 +51,8 @@ const Hero = () => {
     e.preventDefault();
     e.stopPropagation();
     
-    // First try to find contact section on current page
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    } else {
-      // If not found, navigate to contact page
-      window.location.href = '/contact';
-    }
+    // Navigate directly to contact page
+    window.location.href = '/contact';
   };
 
   const scrollToPortfolio = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,6 +71,16 @@ const Hero = () => {
       window.location.href = '/portfolio';
     }
   };
+
+  // Mouse tracking effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   // Floating particles effect
   const particlesRef = useRef<HTMLDivElement>(null);
@@ -247,20 +253,25 @@ const Hero = () => {
             </motion.span>
             <br />
             <motion.span 
-              className="title-word inline-block text-black"
+              className="title-word inline-block"
               variants={wordVariants}
               whileHover={{ scale: 1.05 }}
               style={{
                 color: useTransform(smoothVelocity, [-1, 0, 1], [
-                  "rgb(0, 0, 0)",
-                  "rgb(0, 0, 0)",
-                  "rgb(0, 0, 0)"
+                  "rgb(249, 115, 22)",
+                  "rgb(255, 255, 255)",
+                  "rgb(239, 68, 68)"
                 ]),
                 filter: useTransform(smoothVelocity, [-1, 0, 1], [
-                  "brightness(1.3) contrast(1.2)",
-                  "brightness(1) contrast(1)",
-                  "brightness(1.3) contrast(1.2)"
-                ])
+                  "blur(0px) brightness(1.2)",
+                  "blur(0px) brightness(1)",
+                  "blur(0px) brightness(1.2)"
+                ]),
+                x: useTransform(mouseX, [0, window.innerWidth], [-20, 20]),
+                y: useTransform(mouseY, [0, window.innerHeight], [-10, 10]),
+                rotateY: useTransform(mouseX, [0, window.innerWidth], [-15, 15]),
+                rotateX: useTransform(mouseY, [0, window.innerHeight], [15, -15]),
+                scale: useTransform(mouseX, [0, window.innerWidth], [1, 1.1])
               }}
             >
               That Think,
