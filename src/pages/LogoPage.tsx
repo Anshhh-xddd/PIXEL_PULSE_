@@ -8,22 +8,81 @@ import image4 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-4.jpg';
 import image5 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-5.jpg';
 import image6 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-6.jpg';
 import image7 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-7.jpg';
-import image8 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-8.jpg';
 import image9 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-9.jpg';
+import rohansMakeover from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-8.jpg';
 
 const LogoPage: React.FC = () => {
-  const baseItems: PortfolioItem[] = sectionByCategory.logo;
+  const baseItems: PortfolioItem[] = sectionByCategory.logo.filter(
+    (i) => {
+      const t = (i.title || '').toLowerCase();
+      const s = (i.slug || '').toLowerCase();
+      return !(
+        t.includes('jay khodiyar') ||
+        t.includes('khodiyar process') ||
+        s.includes('jay-khodiyar') ||
+        t.includes("rohan's makeover") ||
+        s.includes('rohans-makeover') ||
+        t.includes('logo z') ||
+        s.includes('logo-z')
+      );
+    }
+  );
   // Extra featured logo cards (using existing assets)
   const featuredData = [
-    { image: image1, title: 'Perfect Associate',  },
-    { image: image2, title: "Flowmex", },
-    { image: image3, title: 'Ashirvad Jewellers',  }, 
-    { image: image5, title: "Vrindavan Chaat Bhandar",  },
-    { image: image6, title: 'Meenakshi Lifestyle',  },
-    { image: image7, title: 'Radhe fashion',  },
-    { image: image8, title: "Roohan's Make me up",  },
-    { image: image4, title: 'Jay Khodiyar process',  },
-    { image: image9, title: 'Riyal Solar Energy',  },
+    {
+      image: image1,
+      title: 'Perfect Associate',
+      subtitle: 'Corporate Consulting',
+      description: 'A modern, professional logo for Perfect Associate, reflecting trust and expertise.',
+    },
+    {
+      image: image2,
+      title: 'Flowmex',
+      subtitle: 'Industrial Solutions',
+      description: 'Dynamic and fluid logo design for Flowmex, symbolizing innovation and movement.',
+    },
+    {
+      image: image3,
+      title: 'Ashirvad Jewellers',
+      subtitle: 'Jewellery Brand',
+      description: 'Elegant and luxurious logo for Ashirvad Jewellers, capturing the essence of fine craftsmanship.',
+    },
+    {
+      image: image4,
+      title: 'Khodiyar Process',
+      subtitle: 'Manufacturing',
+      description: 'A bold and industrial logo for Khodiyar Process, representing strength and reliability.',
+    },
+    {
+      image: image5,
+      title: 'Vrindavan Chaat Bhandar',
+      subtitle: 'Food & Beverage',
+      description: 'Vibrant and appetizing logo for Vrindavan Chaat Bhandar, evoking taste and tradition.',
+    },
+    {
+      image: image6,
+      title: 'Meenakshi Lifestyle',
+      subtitle: 'Fashion & Lifestyle',
+      description: 'Chic and stylish logo for Meenakshi Lifestyle, embodying elegance and modernity.',
+    },
+    {
+      image: image7,
+      title: 'Radhe Fashion',
+      subtitle: 'Apparel Brand',
+      description: 'Trendy and fashionable logo for Radhe Fashion, appealing to contemporary tastes.',
+    },
+    {
+      image: rohansMakeover,
+      title: "Roohan's Make me up",
+      subtitle: 'Beauty & Makeover',
+      description: "A graceful and creative logo for Roohan's Make me up, highlighting beauty and transformation.",
+    },
+    {
+      image: image9,
+      title: 'Riyal Solar Energy',
+      subtitle: 'Renewable Energy',
+      description: 'Clean and energetic logo for Riyal Solar Energy, symbolizing sustainability and power.',
+    },
   ];
   const baseTs = Date.now();
   const featured: PortfolioItem[] = featuredData.map((d: any, idx) => ({
@@ -32,7 +91,15 @@ const LogoPage: React.FC = () => {
     image: d.image as any,
     category: 'logo',
     slug: `logo-feature-${baseTs + idx}`
-  } as any));
+  } as any)).filter((i) => {
+    const t = (i.title || '').toLowerCase();
+    const s = (i.slug || '').toLowerCase();
+    return !(
+      t.includes("roohan") ||
+      t.includes('logo z') ||
+      s.includes('logo-z')
+    );
+  });
 
   const items: PortfolioItem[] = useMemo(() => ([...featured, ...baseItems]), [featured, baseItems]);
 
