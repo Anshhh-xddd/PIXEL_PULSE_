@@ -119,15 +119,31 @@ const MarqueeSlider: React.FC = () => {
     <section
       className="w-full h-screen bg-black relative overflow-hidden flex flex-col justify-center"
     >
-      {/* Background aura */}
+      {/* Enhanced Background aura */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-black to-gray-950"></div>
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[140%] h-[300px] 
                       bg-gradient-radial from-orange-500/20 via-transparent to-transparent blur-3xl opacity-40"></div>
+      
+      {/* Additional aesthetic elements */}
+      <div className="absolute top-20 left-10 w-32 h-32 border border-orange-500/20 rounded-full opacity-30 animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-24 h-24 border border-orange-500/15 rounded-full opacity-20 animate-pulse" style={{animationDelay: '1s'}}></div>
+      <div className="absolute top-1/2 left-5 w-16 h-16 border border-orange-500/10 rounded-full opacity-15 animate-pulse" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-1/3 right-20 w-20 h-20 border border-orange-500/25 rounded-full opacity-25 animate-pulse" style={{animationDelay: '0.5s'}}></div>
 
       <div className="w-full h-full flex flex-col justify-center items-center relative z-10 px-4">
-        <h3 className="text-center text-white text-3xl md:text-5xl font-bold mb-16">
-          Trusted by <span className="text-orange-500">Great Brands</span>
-        </h3>
+        <div className="text-center mb-16">
+          <h3 className="text-white text-3xl md:text-5xl font-bold mb-4">
+            Crafting <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-orange-400">Visual Stories</span> for
+          </h3>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
+            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+            <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
+          </div>
+          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
+            From startups to enterprises, we transform ideas into <span className="text-orange-400 font-medium">iconic brand identities</span>
+          </p>
+        </div>
 
         {/* Smooth Infinite Marquee Full Width */}
         <div className="relative w-full overflow-hidden">

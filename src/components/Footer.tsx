@@ -83,7 +83,7 @@ Best regards,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: "easeOut" as const
       }
     }
   };
@@ -92,30 +92,71 @@ Best regards,
     <footer className="bg-black text-white relative overflow-hidden">
       {/* Enhanced gradient backgrounds */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/80 to-black"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/15 via-transparent to-orange-500/10 animate-pulse-slow"></div>
-      <div className="absolute inset-0 bg-gradient-radial from-orange-500/5 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-orange-500/15 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-orange-500/10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/90 to-black"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-orange-500/15 animate-pulse-slow"></div>
+      <div className="absolute inset-0 bg-gradient-radial from-orange-500/8 via-transparent to-transparent"></div>
+      
+      {/* Enhanced geometric patterns */}
+      <div className="absolute top-20 left-10 w-32 h-32 border border-orange-500/20 rounded-full opacity-30 animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-24 h-24 border border-orange-500/15 rounded-full opacity-25 animate-pulse" style={{animationDelay: '1s'}}></div>
+      <div className="absolute top-1/2 left-5 w-16 h-16 border border-orange-500/10 rounded-full opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-1/3 right-20 w-20 h-20 border border-orange-500/25 rounded-full opacity-30 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+      
+      {/* Animated grid pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(249,115,22,0.3) 1px, transparent 0)`,
+          backgroundSize: '40px 40px'
+        }}></div>
+      </div>
 
-      {/* Floating particles */}
+      {/* Enhanced floating particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(16)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-orange-500/30 rounded-full"
+            className="absolute w-1 h-1 bg-orange-500/40 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, -15, 0],
-              opacity: [0.3, 0.8, 0.3],
+              y: [0, -20, 0],
+              x: [0, Math.random() * 10 - 5, 0],
+              opacity: [0.2, 0.8, 0.2],
+              scale: [1, 1.5, 1],
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: Math.random() * 4 + 3,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Larger floating elements */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={`large-${i}`}
+            className="absolute w-2 h-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              rotate: [0, 180, 360],
+              opacity: [0.1, 0.4, 0.1],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: Math.random() * 5 + 4,
               repeat: Infinity,
               delay: Math.random() * 2,
+              ease: "easeInOut"
             }}
           />
         ))}
@@ -140,48 +181,85 @@ Best regards,
               variants={itemVariants}
             >
               <motion.div 
-                className="mb-6"
+                className="mb-8 relative group"
                 data-animation="scale"
               >
-                <img 
-                  src={Pixel_Pulse}
-                  alt="PixelPulse Logo"
-                  className="h-12 sm:h-14 md:h-16 lg:h-20 cursor-pointer hover:drop-shadow-glow transition-all duration-300"
-                />
+                <div className="relative">
+                  <img 
+                    src={Pixel_Pulse}
+                    alt="PixelPulse Logo"
+                    className="h-12 sm:h-14 md:h-16 lg:h-20 cursor-pointer hover:drop-shadow-glow transition-all duration-300"
+                  />
+                </div>
               </motion.div>
               
               <motion.p 
-                className="text-gray-300 text-base sm:text-lg md:text-xl leading-relaxed max-w-lg mb-8"
+                className="text-gray-300 text-base sm:text-lg md:text-xl leading-relaxed max-w-lg mb-8 relative"
                 data-animation="text-reveal"
               >
-                Transforming ideas into digital reality with cutting-edge design and innovative technology solutions. We create brands that think, learn, and evolve.
+                <span className="relative z-10">
+                  Transforming ideas into <span className="text-orange-400 font-medium">digital reality</span> with cutting-edge design and innovative technology solutions. We create brands that <span className="text-orange-400 font-medium">think, learn, and evolve</span>.
+                </span>
+                <motion.div
+                  className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-orange-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                />
               </motion.p>
 
               {/* Contact Info */}
               <motion.div 
-                className="space-y-3 mb-8"
+                className="space-y-4 mb-8"
                 data-animation="stagger"
                 data-stagger="0.1"
               >
                 {contactInfo.map((info, index) => (
                   <motion.div 
                     key={index}
-                    className="flex items-center gap-3 text-gray-300 hover:text-orange-500 transition-colors duration-300"
+                    className="group flex items-center gap-4 text-gray-300 hover:text-orange-500 transition-all duration-300 p-3 rounded-xl hover:bg-orange-500/5 border border-transparent hover:border-orange-500/20"
                     data-animation="slide"
                     data-direction="left"
+                    whileHover={{ x: 5 }}
                   >
-                    <div className="p-2 bg-orange-500/10 rounded-lg">
-                      {info.icon}
-                    </div>
+                    <motion.div 
+                      className="p-3 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl border border-orange-500/30 group-hover:border-orange-500/50 group-hover:scale-110 transition-all duration-300 relative overflow-hidden"
+                      whileHover={{ rotateY: 5 }}
+                    >
+                      <div className="text-orange-400 group-hover:text-orange-300 transition-colors duration-300 relative z-10">
+                        {info.icon}
+                      </div>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                        initial={{ x: '-100%' }}
+                        whileHover={{ x: '100%' }}
+                        transition={{ duration: 0.6 }}
+                      />
+                      
+                      {/* Animated glow effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-orange-500/20 rounded-xl blur-md"
+                        animate={{ 
+                          scale: [1, 1.1, 1],
+                          opacity: [0.3, 0.6, 0.3]
+                        }}
+                        transition={{ 
+                          duration: 2, 
+                          repeat: Infinity, 
+                          ease: "easeInOut",
+                          delay: index * 0.3
+                        }}
+                      />
+                    </motion.div>
                     {info.action ? (
                       <button
                         onClick={info.action}
-                        className="text-sm sm:text-base cursor-pointer"
+                        className="text-sm sm:text-base cursor-pointer font-medium hover:underline"
                       >
                         {info.text}
                       </button>
                     ) : (
-                      <span className="text-sm sm:text-base">{info.text}</span>
+                      <span className="text-sm sm:text-base font-medium">{info.text}</span>
                     )}
                   </motion.div>
                 ))}
@@ -196,14 +274,20 @@ Best regards,
                   <motion.a
                     key={index}
                     href={social.href}
-                    className="group p-3 bg-gray-800/50 hover:bg-orange-500/20 border border-gray-700 hover:border-orange-500/50 rounded-xl transition-all duration-300 hover:scale-110"
-                    whileHover={{ scale: 1.1 }}
+                    className="group relative p-4 bg-gradient-to-br from-gray-800/60 to-gray-900/60 hover:from-orange-500/20 hover:to-red-500/20 border border-gray-700/50 hover:border-orange-500/50 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-orange-500/25"
+                    whileHover={{ scale: 1.1, rotateY: 5 }}
                     whileTap={{ scale: 0.95 }}
                     title={social.label}
                   >
-                    <div className="text-gray-300 group-hover:text-orange-500 transition-colors duration-300">
+                    <div className="text-gray-300 group-hover:text-orange-400 transition-colors duration-300 relative z-10">
                       {social.icon}
                     </div>
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.6 }}
+                    />
                   </motion.a>
                 ))}
               </motion.div>
@@ -214,6 +298,7 @@ Best regards,
               variants={itemVariants}
               data-animation="slide"
               data-direction="right"
+              className="relative"
             >
               <motion.h4 
                 className="text-xl sm:text-2xl font-bold mb-6 text-white"
@@ -221,29 +306,45 @@ Best regards,
               >
                 Our Services
               </motion.h4>
-              <motion.ul 
-                className="space-y-3"
-                data-animation="stagger"
-                data-stagger="0.1"
-              >
+                             <motion.ul 
+                 className="space-y-3"
+                 data-animation="stagger"
+                 data-stagger="0.1"
+               >
                 {services.map((service, index) => (
                   <motion.li 
                     key={index}
                     data-animation="slide"
                     data-direction="left"
                   >
-                    <a
-                      href="#services"
-                      onClick={scrollToSection('services')}
-                      className="flex items-center gap-2 text-gray-300 hover:text-orange-500 transition-colors duration-300 group cursor-pointer"
-                    >
-                      <motion.div
-                        className="w-1 h-1 bg-orange-500 rounded-full group-hover:scale-150 transition-transform duration-300"
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                      />
-                      <span className="text-sm sm:text-base">{service}</span>
-                    </a>
+                                         <motion.a
+                       href="#services"
+                       onClick={scrollToSection('services')}
+                       className="group flex items-center gap-3 text-gray-300 hover:text-orange-400 transition-all duration-300 cursor-pointer p-2 rounded-lg hover:bg-orange-500/5 border border-transparent hover:border-orange-500/20"
+                       whileHover={{ x: 5 }}
+                     >
+                       <motion.div
+                         className="w-2 h-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full group-hover:scale-150 transition-transform duration-300 relative"
+                         animate={{ scale: [1, 1.3, 1] }}
+                         transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                       >
+                         {/* Animated glow around dot */}
+                         <motion.div
+                           className="absolute inset-0 bg-orange-500/30 rounded-full blur-sm"
+                           animate={{ 
+                             scale: [1, 1.5, 1],
+                             opacity: [0.5, 0.8, 0.5]
+                           }}
+                           transition={{ 
+                             duration: 2, 
+                             repeat: Infinity, 
+                             ease: "easeInOut",
+                             delay: index * 0.2
+                           }}
+                         />
+                       </motion.div>
+                       <span className="text-sm sm:text-base font-medium">{service}</span>
+                     </motion.a>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -272,18 +373,13 @@ Best regards,
                     data-animation="slide"
                     data-direction="left"
                   >
-                    <a
-                      href={`#${link.id}`}
-                      onClick={scrollToSection(link.id)}
-                      className="flex items-center gap-2 text-gray-300 hover:text-orange-500 transition-colors duration-300 group cursor-pointer"
-                    >
-                      <motion.div
-                        className="w-1 h-1 bg-orange-500 rounded-full group-hover:scale-150 transition-transform duration-300"
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                      />
-                      <span className="text-sm sm:text-base">{link.label}</span>
-                    </a>
+                                         <a
+                       href={`#${link.id}`}
+                       onClick={scrollToSection(link.id)}
+                       className="text-gray-300 hover:text-orange-500 transition-colors duration-300 cursor-pointer text-sm sm:text-base font-normal"
+                     >
+                       {link.label}
+                     </a>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -343,7 +439,33 @@ Best regards,
               data-animation="fade"
             >
               <span>Made with</span>
-              <Heart size={16} className="text-red-500 animate-pulse" />
+              <motion.div
+                className="relative"
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 5, -5, 0]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              >
+                <Heart size={16} className="text-red-500" />
+                <motion.div
+                  className="absolute inset-0 bg-red-500/30 rounded-full blur-sm"
+                  animate={{ 
+                    scale: [1, 1.5, 1],
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity, 
+                    ease: "easeInOut",
+                    delay: 0.5
+                  }}
+                />
+              </motion.div>
               <span>by PixelPulse</span>
             </motion.div>
 
@@ -368,27 +490,161 @@ Best regards,
         </motion.div>
       </div>
 
-      {/* Scroll to Top Button */}
+      {/* Enhanced Scroll to Top Button */}
       <motion.button
         onClick={scrollToTop}
-        className="fixed bottom-6 right-6 z-50 p-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-        whileHover={{ scale: 1.1 }}
+        className="fixed bottom-8 right-8 z-[9999] p-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden"
+        whileHover={{ scale: 1.15, rotate: 8, y: -5 }}
         whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 1 }}
+        initial={{ opacity: 0, y: 50, rotate: 180 }}
+        animate={{ 
+          opacity: 1, 
+          y: 0, 
+          rotate: 0,
+          scale: [1, 1.05, 1]
+        }}
+        transition={{ 
+          duration: 0.8, 
+          delay: 1,
+          scale: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+        }}
+        style={{
+          right: '2rem',
+          bottom: '2rem',
+          position: 'fixed',
+          zIndex: 9999
+        }}
       >
         <motion.div
-          animate={{ y: [0, -3, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ 
+            y: [0, -4, 0],
+            rotate: [0, 2, -2, 0],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="relative z-10"
         >
           <ArrowUp size={20} />
         </motion.div>
+        
+        {/* Enhanced shine effects */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full opacity-0 group-hover:opacity-100"
           initial={{ x: '-100%' }}
           whileHover={{ x: '100%' }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+        />
+        
+        {/* Multiple animated glow rings */}
+        <motion.div
+          className="absolute inset-0 border-2 border-white/40 rounded-full"
+          animate={{ 
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.7, 0.2],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ 
+            duration: 4, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
+        />
+        <motion.div
+          className="absolute inset-0 border border-white/20 rounded-full"
+          animate={{ 
+            scale: [1, 1.5, 1],
+            opacity: [0.1, 0.4, 0.1],
+            rotate: [0, -90, -180]
+          }}
+          transition={{ 
+            duration: 6, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        
+        {/* Enhanced floating particles */}
+        <motion.div
+          className="absolute -top-3 -left-3 w-2.5 h-2.5 bg-gradient-to-r from-orange-400 to-orange-300 rounded-full"
+          animate={{ 
+            y: [0, -12, 0],
+            x: [0, -5, 0],
+            opacity: [0.3, 1, 0.3],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: 0.3
+          }}
+        />
+        <motion.div
+          className="absolute -bottom-3 -right-3 w-2 h-2 bg-gradient-to-r from-red-400 to-red-300 rounded-full"
+          animate={{ 
+            y: [0, -10, 0],
+            x: [0, 5, 0],
+            opacity: [0.3, 1, 0.3],
+            scale: [1, 1.3, 1]
+          }}
+          transition={{ 
+            duration: 2.5, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: 0.8
+          }}
+        />
+        <motion.div
+          className="absolute -top-2 right-2 w-1.5 h-1.5 bg-yellow-400 rounded-full"
+          animate={{ 
+            y: [0, -8, 0],
+            x: [0, 3, 0],
+            opacity: [0.4, 0.9, 0.4],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{ 
+            duration: 1.8, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: 1.2
+          }}
+        />
+        
+        {/* Pulsing background glow */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-full blur-md"
+          animate={{ 
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{ 
+            duration: 2.5, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: 0.5
+          }}
+        />
+        
+        {/* Rotating gradient border */}
+        <motion.div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: 'conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent, rgba(255,255,255,0.3), transparent)',
+            padding: '2px'
+          }}
+          animate={{ 
+            rotate: 360
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity, 
+            ease: "linear"
+          }}
         />
       </motion.button>
     </footer>
