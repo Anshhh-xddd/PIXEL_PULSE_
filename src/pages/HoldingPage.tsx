@@ -12,10 +12,22 @@ import image4 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-4.jpg';
 
 const HoldingPage: React.FC = () => {
   // Exclude specific holding cards per request
-  const excludedSlugs = ['creatolive', 'donzel-makeover', 'duplex-engineered'];
-  const excludedTitles = ['Creatolive', 'Donzel Makeover', 'Duplex Engineered'];
-  const baseItems: PortfolioItem[] = sectionByCategory.holding.filter(
-    (i) => !excludedSlugs.includes(i.slug) && !excludedTitles.includes(i.title)
+  const excludedSlugs = ['creatolive', 'donzel-makeover', 'duplex-engineered', 'card-to-remove'];
+  const excludedTitles = ['Creatolive', 'Donzel Makeover', 'Duplex Engineered', 'Card to Remove'];
+  type HoldingItem = PortfolioItem & {
+    compositeImages?: string[];
+    lightboxImage?: string;
+  };
+
+  const baseItems: HoldingItem[] = useMemo(
+    () =>
+      sectionByCategory.holding.filter(
+        (i) =>
+          !excludedSlugs.includes(i.slug) &&
+          !excludedTitles.includes(i.title) &&
+          !i.title.toLowerCase().includes('ashirvad jewellers')
+      ),
+    []
   );
   // Featured extras to enrich holding page (unique slugs, clearer titles)
   const featuredData = [
@@ -27,15 +39,15 @@ const HoldingPage: React.FC = () => {
     // { image: image6, title: 'Parking Lot Billboard – Concept 6', subtitle: 'Billboard / Outdoor' },
   ];
   const baseTs = Date.now();
-  const featured: PortfolioItem[] = featuredData.map((d, idx) => ({
+  const featured: HoldingItem[] = featuredData.map((d, idx) => ({
     title: d.title,
     subtitle: d.subtitle,
-    image: d.image as any,
+    image: d.image as string,
     category: 'holding',
-    slug: `holding-feature-${baseTs + idx}`
-  } as any));
+    slug: `holding-feature-${baseTs + idx}`,
+  }));
 
-  const [customItems] = useState<PortfolioItem[]>(() => {
+  const [customItems] = useState<HoldingItem[]>(() => {
     try {
       const raw = localStorage.getItem('holding_custom_items');
       return raw ? JSON.parse(raw) : [];
@@ -44,7 +56,7 @@ const HoldingPage: React.FC = () => {
     }
   });
 
-  const items: PortfolioItem[] = useMemo(() => {
+  const items: HoldingItem[] = useMemo(() => {
     // Featured first, then up to three saved customs (non-editable), then defaults
     return [...featured, ...customItems.slice(0, 3), ...baseItems];
   }, [featured, customItems, baseItems]);
@@ -82,8 +94,8 @@ const HoldingPage: React.FC = () => {
           </div>
 
           {/* Masonry grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3" style={{ columnGap: '1rem' }}>
-            {items.map((p: any, i) => (
+          <div className="columns-1 sm:columns-2 lg:columns-3 [column-gap:1rem]">
+            {items.map((p: HoldingItem, i: number) => (
               <figure
                 key={p.slug}
                 role="button"
@@ -138,7 +150,7 @@ const HoldingPage: React.FC = () => {
                 className="relative max-w-5xl w-full"
                 onClick={(e) => e.stopPropagation()}
               >
-                <img src={(items[activeIndex] as any).lightboxImage || items[activeIndex].image} alt={items[activeIndex].title} className="w-full h-auto rounded-xl border border-gray-800" />
+                <img src={(items[activeIndex] as HoldingItem).lightboxImage || items[activeIndex].image} alt={items[activeIndex].title} className="w-full h-auto rounded-xl border border-gray-800" />
                 <div className="mt-3 flex items-center justify-between">
                   <div>
                     <div className="text-white text-lg font-semibold">{items[activeIndex].title}</div>
