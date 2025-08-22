@@ -63,6 +63,8 @@ const SectionWrapper = ({ title, items, category }: { title: string; items: Port
           const href = category === 'brochure' ? '/portfolio/brochure'
             : category === 'holding' ? '/portfolio/holding'
             : category === 'logo' ? '/portfolio/logo'
+            : category === 'packaging' ? '/portfolio/packaging'
+            : category === 'visiting' ? '/portfolio/visiting-card'
             : `/portfolio/category/${category}`;
           return <a href={href} className="text-sm text-orange-400 underline">View all</a>;
         })()
@@ -91,6 +93,7 @@ const Portfolio: React.FC = () => {
     <SectionWrapper key="logo" title="Logo Design" items={logoItems} category="logo" />,
     <SectionWrapper key="packaging" title="Packaging Design" items={packagingItems} category="packaging" />,
     <SectionWrapper key="visiting" title="Visiting Cards" items={visitingCardItems} category="visiting" />,
+    <SectionWrapper key="packagingPage" title="Packaging" items={packagingItems} category="packaging" />,
   ];
 
   // Right-side SVG progress bar refs/state

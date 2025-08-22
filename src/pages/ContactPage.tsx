@@ -595,11 +595,7 @@ Best regards,
                             Sending Message...
                           </>
                         ) : (
-                          <>
-                            <Send size={18} />
-                            Send Message
-                            <Zap size={16} />
-                          </>
+                          <div className="flex items-center space-x-2 text-2xl gap-3" > <Send size={22} /> Send Message {/* <Zap size={16} /> */} </div> 
                         )}
                       </span>
                     </motion.button>

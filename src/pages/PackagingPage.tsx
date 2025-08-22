@@ -1,298 +1,418 @@
-import React, { useEffect, useState } from "react";
-import box1 from "../Assets/ASHIRVAD_jewellwers 2.jpg";
-import Box3 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-3.jpg";
-import Box4 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-4.jpg";
-import Box5 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-5.jpg";
-import Box6 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-6.jpg";
-import Almonds6 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 6.jpg";
-import Almonds5 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 5.jpg";
-import Kulfi1 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Kulfi_packaging (1).jpg";
-
-interface Item {
-  title: string;
-  subtitle: string;
-  description: string;
-  image?: string;
-}
+import React, { useEffect, useMemo, useState } from "react";
+import { sectionByCategory, PortfolioItem } from "../data/portfolio";
+import { AnimatePresence, motion } from "framer-motion";
+import Brochure from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 5.jpg";
+import Brochure2 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 6.jpg";
+import Brochure3 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-3.jpg";
+import Brochure4 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-4.jpg";
+import Brochure5 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-5.jpg";
+import Brochure6 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-6.jpg";
+import Brochure7 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-7.jpg";
+import Brochure8 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/box2.jpg";
+import Brochure9 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Kulfi_packaging (1).jpg";
 
 const PackagingPage: React.FC = () => {
-  const [items, setItems] = useState<Item[]>([
+  // Exclude specific items from brochure list
+  const excludedSlugs = ["ap-investment", "ashirvad-jewellers", "cake-delight"];
+  const excludedTitles = [
+    "AP Investment",
+    "Ashirvad Jewellers",
+    "Cake & Delight",
+  ];
+  const baseItems: PortfolioItem[] = sectionByCategory.brochure.filter(
+    (i) => !excludedSlugs.includes(i.slug) && !excludedTitles.includes(i.title)
+  );
+  // Extra brochure-style cards (using existing assets) to enrich the page
+  const featured: PortfolioItem[] = [
     {
-      title: "Gourmet Delight",
-      subtitle: "Premium Sweets Box",
+      title: "Almonds",
+      subtitle: "Packaging",
+      image: Brochure,
+      slug: "Almonds-" + Date.now(),
       description:
-        "Luxury gifting box with rich colors and foil accents for a premium unboxing experience.",
-      image: box1,
-    },
+        "Product packaging design for 'The Nut Sixer' flavored roasted almonds. The pouch features a warm orange and cream color scheme with a cricket theme illustration, highlighting premium flavored roasted almonds (Almond Sizzler).",
+    } as any,
     {
-      title: "Nature Fresh",
-      subtitle: "Organic Tea",
+      title: "Almonds",
+      subtitle: "Packaging",
+      image: Brochure2,
+      slug: "Almonds-" + Date.now(),
       description:
-        "Eco-conscious pack with earthy tones, recycled textures, and clean labeling.",
-      image: Box4,
-    },
+        "Product packaging design for 'The Nut Sixer' flavored roasted almonds. The pouch features a blue and white color scheme with a cricket theme illustration, emphasizing high-quality flavored roasted almonds (Almond Sizzler).",
+    } as any,
     {
-      title: "Urban Brew",
-      subtitle: "Coffee Beans",
+      title: "Dplus",
+      subtitle: "Packaging",
+      image: Brochure3,
+      slug: "Dplus-" + Date.now(),
       description:
-        "Bold modern pouch with matte finish and sharp typography for coffee lovers.",
-      image: Box3,
-    },
+        "Product packaging design for 'Dplus' Architectural Hardware Fittings. The box features a premium red and black color scheme with a gold accent, showcasing a modern and professional look for hardware fitting products.",
+    } as any,
     {
-      title: "Chef Select",
-      subtitle: "Spice Blend Box",
-      description:
-        "Vibrant spice packaging highlighting authenticity and tradition.",
-      image: Box5,
-    },
+      title: "Dplus",
+      subtitle: "Packaging",
+      image: Brochure4,
+      slug: "Dplus-GoldBlack-" + Date.now(),
+    "description": "Premium packaging design for 'Dplus' Architectural Hardware Fittings. The box features a black and gold combination with a bold arrow design, reflecting strength and quality in construction fittings."
+    } as any,
     {
-      title: "Daily Care",
-      subtitle: "Personal Care Box",
-      description:
-        "Soft-toned design with clean typography for wellness and purity.",
-      image: Box6,
-    },
+      title: "Architectural Hardware Fittings",
+    subtitle: "Packaging",
+    image: Brochure5,
+    slug: "Dplus-RedYellow-" + Date.now(),
+    description: "Product packaging for 'Dplus' Architectural Hardware Fittings. The red box with a yellow accent creates a modern and energetic design, emphasizing durability and architectural precision."
+    } as any,
     {
-      title: "Nut Sizer – Almonds 6",
-      subtitle: "Flavored Almonds",
-      description:
-        "Glossy premium pack conveying richness, flavor and health.",
-      image: Almonds6,
-    },
+      title: "Architectural Hardware Fittings",
+    subtitle: "Packaging",
+    image: Brochure6,
+    slug: "Dplus-CreamRed-" + Date.now(),
+    description: "Stylish packaging for 'Dplus' Architectural Hardware Fittings. The cream and red box with geometric accents highlights sophistication and reliability for hardware products."
+    } as any,
     {
-      title: "Nut Sizer – Almonds 5",
-      subtitle: "Roasted Almonds",
+      title: "Architectural Hardware Fittings",
+      subtitle: "Packaging",
+      image: Brochure7,
+      slug: "Dplus-NavyBlue-" + Date.now(),
       description:
-        "Clean, appetizing pack with clear nutrition highlights.",
-      image: Almonds5,
-    },
+        "Elegant packaging design for 'Dplus' Architectural Hardware Fittings. The navy blue and gold accents on a long rectangular box give a premium and professional look.",
+    } as any,
     {
-      title: "Kulfi Bliss",
-      subtitle: "Ice Cream Bar Pack",
-      description:
-        "Refreshing cool tones and creamy visuals for indulgence.",
-      image: Kulfi1,
-    },
-  ]);
+      title: "Architectural Hardware Fittings",
+      subtitle: "Packaging",
+      image: Brochure8,
+      slug: "Dplus-AquaBlue-" + Date.now(),
+    description:
+      "Fresh packaging design for 'Dplus' Architectural Hardware Fittings. The aqua blue shade with subtle patterns conveys innovation and modernity in hardware solutions.",
 
-  const [editMode, setEditMode] = useState(false);
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [form, setForm] = useState<Item>({
-    title: "",
-    subtitle: "",
-    description: "",
-    image: "",
+    } as any,
+    {
+      title: "Crunchy Chocobar",
+      subtitle: "Ice Cream Packaging",
+      image: Brochure9,
+      slug: "Aditya-Chocobar-" + Date.now(),
+      description:
+        "Packaging design for 'Aditya Ice Cream' Crunchy Chocobar. The wrapper features rich chocolate tones with a tempting chocobar visual, accompanied by the tagline 'Big happiness comes in small packs'.",
+    } as any,
+  ];
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [customOpen, setCustomOpen] = useState(false);
+  const [customTitle, setCustomTitle] = useState("");
+  const [customSubtitle, setCustomSubtitle] = useState("");
+  const [customImage, setCustomImage] = useState("");
+  const [customItems, setCustomItems] = useState<PortfolioItem[]>(() => {
+    try {
+      const raw = localStorage.getItem("brochure_custom_items");
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
   });
 
-  // 🔸 Persist items to localStorage
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem('pixel_pulse.packaging.items.v1');
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) {
-          setItems(parsed);
-        }
-      }
-    } catch {
-      // ignore invalid stored data
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const items: PortfolioItem[] = useMemo(() => {
+    return [...featured, ...customItems, ...baseItems];
+  }, [featured, customItems, baseItems]);
+
+  const close = () => setActiveIndex(null);
+  const next = () =>
+    setActiveIndex((i) => (i === null ? 0 : (i + 1) % items.length));
+  const prev = () =>
+    setActiveIndex((i) =>
+      i === null ? 0 : (i - 1 + items.length) % items.length
+    );
 
   useEffect(() => {
-    try {
-      localStorage.setItem('pixel_pulse.packaging.items.v1', JSON.stringify(items));
-    } catch {
-      // storage might be unavailable; fail silently
-    }
-  }, [items]);
-
-  // 🔹 Start editing a card
-  const startEdit = (index: number) => {
-    setEditingIndex(index);
-    setForm(items[index]);
-  };
-
-  // 🔹 Cancel editing
-  const cancelEdit = () => {
-    setEditingIndex(null);
-    setForm({ title: "", subtitle: "", description: "", image: "" });
-  };
-
-  // 🔹 Save edited card
-  const saveEdit = () => {
-    if (editingIndex === null) return;
-    const updated = [...items];
-    updated[editingIndex] = form;
-    setItems(updated);
-    cancelEdit();
-  };
-
-  // 🔹 Delete a card
-  const deleteItem = (index: number) => {
-    setItems((prev) => prev.filter((_, i) => i !== index));
-    if (editingIndex === index) cancelEdit();
-  };
-
-  // 🔹 Add new card at the top
-  const addItem = () => {
-    const newCard: Item = {
-      title: "New Packaging",
-      subtitle: "Subtitle",
-      description: "Describe this packaging...",
-      image: "",
+    const onKey = (e: KeyboardEvent) => {
+      if (activeIndex === null) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
     };
-    setItems((prev) => [newCard, ...prev]);
-    setEditingIndex(0); // instantly open the new card in edit mode
-    setForm(newCard);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeIndex, items.length]);
+
+  const saveCustomItems = (nextItems: PortfolioItem[]) => {
+    setCustomItems(nextItems);
+    try {
+      localStorage.setItem("brochure_custom_items", JSON.stringify(nextItems));
+    } catch {}
+  };
+
+  const toSlug = (str: string) =>
+    str
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-") +
+    "-" +
+    Date.now();
+
+  const addCustomCard = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customTitle || !customImage) return;
+    const newItem: PortfolioItem = {
+      title: customTitle,
+      subtitle: customSubtitle || "Custom",
+      image: customImage,
+      category: "brochure",
+      slug: toSlug(customTitle),
+    } as any;
+    const next = [newItem, ...customItems];
+    saveCustomItems(next);
+    setCustomOpen(false);
+    setCustomTitle("");
+    setCustomSubtitle("");
+    setCustomImage("");
+  };
+
+  const removeCustom = (slug: string) => {
+    const next = customItems.filter((i) => i.slug !== slug);
+    saveCustomItems(next);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-50"></div>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-orange-500/10 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-orange-500/5"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black"></div>
 
-      <main className="relative z-10 pt-24 md:pt-28 pb-20">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-12">
-            <h1 className="text-white text-4xl md:text-5xl font-extrabold tracking-tight">
-              Packaging Design
+      <main className="relative z-10 pt-24 md:pt-28 pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-white text-3xl md:text-4xl font-extrabold">
+              Brochure Design
             </h1>
-            <a href="/portfolio" className="text-orange-400 underline">
-              ← Back
-            </a>
-          </div>
-
-          {/* Controls */}
-          <div className="mb-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => setEditMode((v) => !v)}
-                className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                  editMode
-                    ? "bg-orange-500 text-black"
-                    : "bg-gray-800 text-white hover:bg-gray-700"
-                }`}
+              <a href="/portfolio" className="text-orange-400 underline">
+                ← Back
+              </a>
+              <a
+                href="/portfolio/packaging"
+                className="text-orange-400 underline"
               >
-                {editMode ? "Exit Edit" : "Edit Mode"}
-              </button>
-              {editMode && (
-                <button
-                  onClick={addItem}
-                  className="px-4 py-2 rounded-lg font-semibold bg-gray-100 text-gray-900 hover:bg-white"
-                >
-                  Add Card
-                </button>
-              )}
+                View All Packaging
+              </a>
             </div>
-            <span className="text-gray-400 text-sm">{items.length} cards</span>
           </div>
 
-          {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {items.map((item, i) => (
-              <div
-                key={`${item.title}-${i}`}
-                className="rounded-2xl border border-gray-800 bg-gray-900/50 p-5 relative"
+          {/* Masonry grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {items.map((p, i) => (
+              <figure
+                key={p.slug}
+                role="button"
+                aria-label={`Open ${p.title}`}
+                tabIndex={0}
+                onClick={() => setActiveIndex(i)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") setActiveIndex(i);
+                }}
+                className="mb-4 md:mb-6 break-inside-avoid relative rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:border-orange-500/40 transition select-none shadow-lg hover:shadow-orange-500/10"
               >
-                {/* Edit/Delete Buttons */}
-                {editMode && (
-                  <div className="absolute top-3 right-3 flex gap-2">
+                <div className="relative w-full">
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="block w-full h-auto object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Remove for customs */}
+                  {customItems.find((ci) => ci.slug === p.slug) && (
                     <button
-                      onClick={() => startEdit(i)}
-                      className="px-2 py-1 text-xs rounded bg-blue-500 text-white hover:bg-blue-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeCustom(p.slug);
+                      }}
+                      className="absolute top-2 right-2 text-xs px-2 py-1 rounded bg-black/70 text-white border border-gray-700 hover:border-red-400"
                     >
-                      Edit
+                      Remove
                     </button>
-                    <button
-                      onClick={() => deleteItem(i)}
-                      className="px-2 py-1 text-xs rounded bg-red-500 text-white hover:bg-red-600"
-                    >
-                      Delete
-                    </button>
+                  )}
+                </div>
+                <figcaption className="p-4">
+                  <div className="text-white text-lg font-semibold leading-tight">
+                    {p.title}
                   </div>
-                )}
-
-                {/* If card is being edited */}
-                {editingIndex === i ? (
-                  <div className="space-y-3">
-                    <input
-                      type="text"
-                      value={form.title}
-                      onChange={(e) =>
-                        setForm({ ...form, title: e.target.value })
-                      }
-                      className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
-                      placeholder="Title"
-                    />
-                    <input
-                      type="text"
-                      value={form.subtitle}
-                      onChange={(e) =>
-                        setForm({ ...form, subtitle: e.target.value })
-                      }
-                      className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
-                      placeholder="Subtitle"
-                    />
-                    <input
-                      type="text"
-                      value={form.image || ""}
-                      onChange={(e) =>
-                        setForm({ ...form, image: e.target.value })
-                      }
-                      className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
-                      placeholder="Image URL (optional)"
-                    />
-                    <textarea
-                      value={form.description}
-                      onChange={(e) =>
-                        setForm({ ...form, description: e.target.value })
-                      }
-                      className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 h-24"
-                      placeholder="Description"
-                    />
-                    <div className="flex gap-2">
-                      <button
-                        onClick={saveEdit}
-                        className="px-3 py-1 rounded bg-green-500 text-white hover:bg-green-600"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={cancelEdit}
-                        className="px-3 py-1 rounded bg-gray-600 text-white hover:bg-gray-500"
-                      >
-                        Cancel
-                      </button>
-                    </div>
+                  <div className="text-gray-400 text-xs font-medium mt-0.5">
+                    {p.subtitle}
                   </div>
-                ) : (
-                  <>
-                    {item.image && (
-                      <div className="mb-3 overflow-hidden rounded-lg border border-gray-800">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-40 object-cover"
-                        />
-                      </div>
-                    )}
-                    <div className="text-white text-lg font-semibold">
-                      {item.title}
+                  {(p as any).description && (
+                    <div className="text-gray-300 text-sm mt-2 leading-relaxed">
+                      {(p as any).description}
                     </div>
-                    <div className="text-orange-400 text-sm mb-2">
-                      {item.subtitle}
-                    </div>
-                    <p className="text-gray-300 text-sm leading-relaxed">
-                      {item.description}
-                    </p>
-                  </>
-                )}
-              </div>
+                  )}
+                  {(p as any).details && Array.isArray((p as any).details) && (
+                    <ul className="flex flex-wrap gap-2 mt-3 text-[11px] text-gray-400">
+                      {((p as any).details as string[]).map((d, idx) => (
+                        <li
+                          key={idx}
+                          className="px-2 py-0.5 border border-gray-700 rounded"
+                        >
+                          {d}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
+
+        {/* Add Custom Modal */}
+        <AnimatePresence>
+          {customOpen && (
+            <motion.div
+              key="custom-modal"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+              onClick={() => setCustomOpen(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.98, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="relative w-full max-w-md rounded-2xl border border-gray-800 bg-gray-900/60 p-6"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="text-white text-xl font-semibold mb-4">
+                  Add custom card
+                </div>
+                <form onSubmit={addCustomCard} className="space-y-3">
+                  <div>
+                    <label
+                      className="block text-sm text-gray-300 mb-1"
+                      htmlFor="customTitle"
+                    >
+                      Title
+                    </label>
+                    <input
+                      id="customTitle"
+                      value={customTitle}
+                      onChange={(e) => setCustomTitle(e.target.value)}
+                      className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="block text-sm text-gray-300 mb-1"
+                      htmlFor="customSubtitle"
+                    >
+                      Subtitle
+                    </label>
+                    <input
+                      id="customSubtitle"
+                      value={customSubtitle}
+                      onChange={(e) => setCustomSubtitle(e.target.value)}
+                      className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="block text-sm text-gray-300 mb-1"
+                      htmlFor="customImage"
+                    >
+                      Image URL
+                    </label>
+                    <input
+                      id="customImage"
+                      type="url"
+                      value={customImage}
+                      onChange={(e) => setCustomImage(e.target.value)}
+                      className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none"
+                      required
+                    />
+                  </div>
+                  <div className="flex justify-end gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setCustomOpen(false)}
+                      className="px-3 py-2 rounded-lg border border-gray-700 text-white"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-3 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 text-black font-semibold"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Lightbox */}
+        <AnimatePresence>
+          {activeIndex !== null && items[activeIndex] && (
+            <motion.div
+              key="lightbox"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+              onClick={close}
+            >
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.98, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="relative max-w-5xl w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img
+                  src={items[activeIndex].image}
+                  alt={items[activeIndex].title}
+                  className="w-full h-auto rounded-xl border border-gray-800"
+                />
+                <div className="mt-3 flex items-center justify-between">
+                  <div>
+                    <div className="text-white text-lg font-semibold">
+                      {items[activeIndex].title}
+                    </div>
+                    <div className="text-orange-400 text-sm">
+                      {items[activeIndex].subtitle}
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      aria-label="Previous"
+                      onClick={prev}
+                      className="px-3 py-2 rounded-lg border border-gray-700 text-white hover:border-orange-500/50"
+                    >
+                      Prev
+                    </button>
+                    <button
+                      aria-label="Next"
+                      onClick={next}
+                      className="px-3 py-2 rounded-lg border border-gray-700 text-white hover:border-orange-500/50"
+                    >
+                      Next
+                    </button>
+                    <button
+                      aria-label="Close"
+                      onClick={close}
+                      className="px-3 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 text-black font-semibold"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );
