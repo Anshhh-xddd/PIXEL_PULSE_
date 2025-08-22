@@ -9,9 +9,9 @@ import Logo5 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-5.jpg';
 import Logo7 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-7.jpg';
 import MeenakshiLifestyle from '../Assets/Meenakshi_lifestyle.jpg';
 
-import Box4 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-4.jpg';
-import Box5 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-5.jpg';
-import Box6 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-6.jpg';
+import Box4 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 5.jpg';
+import Box5 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-3.jpg';
+import Box6 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Kulfi_packaging (1).jpg';
 
 import vs1 from '../Assets/Visiting Card-20250821T104554Z-1-001/Visiting Card/Business Card.png';
 import vs2 from '../Assets/Visiting Card-20250821T104554Z-1-001/Visiting Card/Cretolive.jpg';
@@ -46,7 +46,7 @@ export const portfolioItems: PortfolioItem[] = [
   { title: 'Meenakshi Lifestyle Logo', subtitle: 'Lifestyle Brand', image: MeenakshiLifestyle, category: 'logo', slug: s('Meenakshi Lifestyle Logo') },
 
   { title: 'Nut Sizer', subtitle: 'Flavored Roasted Almonds - Almond Sizzler', image: Box4, category: 'packaging', slug: s('nut-sizer-flavored-roasted-almonds') },
-  { title: 'Dotvod', subtitle: 'The Strength Behind Every Innovation', image: Box5, category: 'packaging', slug: s('dotvod-packaging-box') },
+  { title: 'Dplus', subtitle: 'The Strength Behind Every Innovation', image: Box5, category: 'packaging', slug: s('dotvod-packaging-box') },
   { title: 'Crunchy Chocobar', subtitle: 'Big happiness come in small packs', image: Box6, category: 'packaging', slug: s('crunchy-chocobar') },
 
   { title: 'PumpTrock', subtitle: 'Industrial Brand', image: vs1, category: 'visiting', slug: s('PumpTrock') },
