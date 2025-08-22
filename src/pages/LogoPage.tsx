@@ -5,14 +5,10 @@ import image1 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-1.jpg';
 import image2 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-2.jpg';
 import image3 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-3.jpg';
 import image4 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-4.jpg';
-import image5 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-5.jpg';
-import image6 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-6.jpg';
-import image7 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-7.jpg';
 import image9 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-9.jpg';
-import rohansMakeover from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-8.jpg';
-import logo5 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-5.jpg';
-import logo6 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-6.jpg';
-import logo7 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-7.jpg';
+import image8 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-8.jpg'
+
+import { title } from 'framer-motion/client';
 
 const LogoPage: React.FC = () => {
   const baseItems: PortfolioItem[] = sectionByCategory.logo.filter(
@@ -63,47 +59,42 @@ const LogoPage: React.FC = () => {
       description: 'A bold and industrial logo for Khodiyar Process, representing strength and reliability.',
     },
     {
-      image: image5,
-      title: 'Vrindavan Chaat Bhandar',
-      subtitle: 'Food & Beverage',
-      description: 'Vibrant and appetizing logo for Vrindavan Chaat Bhandar, evoking taste and tradition.',
+      image: image8,
+      title: 'rooohans make over',
+      subtitle: 'Hair & style',
+      description: 'Your destination for stunning transformations, expert styling, and personalized hair care.',
     },
-    {
-      image: image6,
-      title: 'Meenakshi Lifestyle',
-      subtitle: 'Fashion & Lifestyle',
-      description: 'Chic and stylish logo for Meenakshi Lifestyle, embodying elegance and modernity.',
-    },
-    {
-      image: image7,
-      title: 'Radhe Fashion',
-      subtitle: 'Apparel Brand',
-      description: 'Trendy and fashionable logo for Radhe Fashion, appealing to contemporary tastes.',
-    },
-    {
-      image: rohansMakeover,
-      title: "Roohan's Make me up",
-      subtitle: 'Beauty & Makeover',
-      description: "A graceful and creative logo for Roohan's Make me up, highlighting beauty and transformation.",
-    },
-    {
-      image: logo5,
-      title: 'New Logo 5',
-      subtitle: 'New Category',
-      description: 'Description for new logo 5.',
-    },
-    {
-      image: logo6,
-      title: 'New Logo 6',
-      subtitle: 'New Category',
-      description: 'Description for new logo 6.',
-    },
-    {
-      image: logo7,
-      title: 'New Logo 7',
-      subtitle: 'New Category',
-      description: 'Description for new logo 7.',
-    },
+    // {
+    //   image: image8,
+    //   title: 'Roohans make me up!!',
+    //   subtitle: 'Saloon',
+    //   description: 'Your destination for stunning transformations, expert styling, and personalized hair care.',
+    // },
+    // {
+    //   image: image9,
+    //   title: 'Roohans make me over',
+    //   Subtitle: 'hair and make over',
+    //   Description:'A stunning and elegant logo for Roohan's Makeover, perfectly capturing the essence of beauty and transformation.'
+    // },
+    // {
+    //   image: image6,
+    //   title: 'Meenakshi Lifestyle',
+    //   subtitle: 'Fashion & Lifestyle',
+    //   description: 'Chic and stylish logo for Meenakshi Lifestyle, embodying elegance and modernity.',
+    // },
+    // {
+    //   image: image7,
+    //   title: 'Radhe ',
+    //   subtitle: 'Apparel Brand',
+    //   description: 'Trendy and fashionable logo for Radhe Fashion, appealing to contemporary tastes.',
+    // },
+    // {
+    //   image: rohansMakeover,
+    //   title: "Roohan's Makeover",
+    //   subtitle: 'Beauty & Makeover',
+    //   description: "A stunning and elegant logo for Roohan's Makeover, perfectly capturing the essence of beauty and transformation.",
+    // },
+
    
   ];
   const baseTs = Date.now();
