@@ -14,6 +14,7 @@ import ServicesPage from './pages/ServicesPage';
 import BrochurePage from './pages/BrochurePage';
 import HoldingPage from './pages/HoldingPage';
 import LogoPage from './pages/LogoPage';
+import PackagingPage from './pages/PackagingPage';
 // Removed PortfolioDetailPage
 import AboutPage from './pages/AboutPage';
 import PortfolioCategoryPage from './pages/PortfolioCategoryPage';
@@ -71,6 +72,7 @@ function App() {
           <Route path="/portfolio/brochure" element={<BrochurePage />} />
           <Route path="/portfolio/holding" element={<HoldingPage />} />
           <Route path="/portfolio/logo" element={<LogoPage />} />
+          <Route path="/portfolio/packaging" element={<PackagingPage />} />
           <Route path="/portfolio/category/:category" element={<PortfolioCategoryPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
