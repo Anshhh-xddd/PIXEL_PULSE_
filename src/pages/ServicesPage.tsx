@@ -114,12 +114,12 @@ const ServicesPage: React.FC = () => {
                     </SkipperCardContent>
 
                     <SkipperCardFooter>
-                      <a
+                      {/* <a
                         href={contactHref}
                         className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 text-black font-semibold py-2 px-3 text-sm hover:from-orange-400 hover:to-red-400 transition-colors"
                       >
                         Discuss this
-                      </a>
+                      </a> */}
                     </SkipperCardFooter>
                   </SkipperCard>
                 </motion.div>

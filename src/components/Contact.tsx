@@ -462,10 +462,7 @@ Best regards,
                         Sending Email...
                       </>
                     ) : (
-                      <>
-                        Send Message
-                        <Send size={18} />
-                      </>
+                      <div className='flex items-center gap-2'><Send size={20} />Send Message </div> 
                     )}
                   </span>
                 </motion.button>

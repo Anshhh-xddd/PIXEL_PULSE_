@@ -5,8 +5,8 @@ import image1 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-1.jpg';
 import image2 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-2.jpg';
 import image3 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-3.jpg';
 import image4 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-4.jpg';
-import image5 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/Free Billboard Mockup PSD.jpg';
-import image6 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/Free Parking Lot Billboard Mockup PSD.jpg';
+// import image5 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/Free Billboard Mockup PSD.jpg';
+// import image6 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/Free Parking Lot Billboard Mockup PSD.jpg';
 // import image7 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/Billboard Mockup with Large Size.jpg';
 
 

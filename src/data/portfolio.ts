@@ -1,14 +1,19 @@
  
 import Brochure from '../Assets/Broucher-20250821T104541Z-1-001/Broucher/Brochure.jpg';
 import Brochure2 from '../Assets/Broucher-20250821T104541Z-1-001/Broucher/Brochure2.jpg';
-import Holding1 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-1.jpg';
-import Holding2 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/1-2.jpg';
+
+import Holding1 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/Billboard Mockup with Large Size.jpg';
+import Holding2 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/Free Billboard Mockup PSD.jpg';
+import Holding3 from '../Assets/Hordings-20250821T104541Z-1-001/Hordings/Free Parking Lot Billboard Mockup PSD.jpg';
+
 import Logo5 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-5.jpg';
 import Logo7 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-7.jpg';
 import MeenakshiLifestyle from '../Assets/Meenakshi_lifestyle.jpg';
+
 import Box4 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-4.jpeg';
 import Box5 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-5.jpeg';
 import Box6 from '../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-6.jpeg';
+
 import vs1 from '../Assets/Visiting Card-20250821T104554Z-1-001/Visiting Card/Business Card.png';
 import vs2 from '../Assets/Visiting Card-20250821T104554Z-1-001/Visiting Card/Cretolive.jpg';
 import vs3 from '../Assets/Visiting Card-20250821T104554Z-1-001/Visiting Card/Radhe Fashion.jpg';
@@ -36,10 +41,10 @@ export const portfolioItems: PortfolioItem[] = [
   { title: 'PumpTork – Product Brochure', subtitle: 'Brochure / Cover + Contact Page ', image: Brochure2, category: 'brochure', slug: s('Ashirvad Jewellers') },
   // { title: 'Cake & Delight', subtitle: 'Food & Beverage', image: '/src/Assets/Cake_and_delight_logo.jpg', category: 'brochure', slug: s('Cake & Delight') },
 
-  { title: 'Ashirvad Jewellers – Billboard 1', subtitle: 'Billboard', image: Holding1, category: 'holding', slug: s('Holding 1') },
-  { title: 'Ashirvad Jewellers – Hoarding 2', subtitle: 'Billboard', image: Holding2, category: 'holding', slug: s('Holding 2') },
-
- 
+  { title: 'Ashirvad Jewellers ', subtitle: 'Billboard', image: Holding1, category: 'holding', slug: s('Holding 1') },
+  { title: 'Ashirvad Jewellers  ', subtitle: 'Billboard', image: Holding2, category: 'holding', slug: s('Holding 2') },
+  { title: 'Ashirvad Jewellers  ', subtitle: 'Billboard', image: Holding3, category: 'holding', slug: s('Holding 3') },
+  
   { title: 'Vrindavan Chaat Bhandar', subtitle: 'Food & Beverage', image: Logo5, category: 'logo', slug: s('Vrindavan Chaat Bhandar') },
   { title: 'Radhe Fashion', subtitle: 'Apparel Brand', image: Logo7, category: 'logo', slug: s('Radhe Fashion') },
   { title: 'Meenakshi Lifestyle Logo', subtitle: 'Lifestyle Brand', image: MeenakshiLifestyle, category: 'logo', slug: s('Meenakshi Lifestyle Logo') },
