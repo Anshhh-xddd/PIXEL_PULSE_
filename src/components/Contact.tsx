@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Zap, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Contact = () => {
@@ -128,13 +128,11 @@ Reply directly to this email to respond to ${formData.name}.
 
   const scrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+    const contactSection = document.querySelector('#contact');
+    contactSection?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
 
   const openGmailCompose = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -415,9 +413,9 @@ Best regards,
                 </div>
 
                 {/* Hidden fields */}
-                <input type="hidden" name="_replyto" value={formData.email} />
-                <input type="hidden" name="_subject" value={`🤖 New Contact Form Submission from ${formData.name} - Pixel Pulse`} />
-                <input type="text" name="_gotcha" style={{ display: 'none' }} />
+                <input type="hidden" name="_replyto" value={formData.email} aria-hidden="true" />
+                <input type="hidden" name="_subject" value={`🤖 New Contact Form Submission from ${formData.name} - Pixel Pulse`} aria-hidden="true" />
+                <input type="text" name="_gotcha" style={{ display: 'none' }} aria-hidden="true" />
 
                 {/* Status messages */}
                 {submitStatus === 'success' && (

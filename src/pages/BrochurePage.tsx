@@ -114,7 +114,7 @@ const BrochurePage: React.FC = () => {
           </div>
 
           {/* Masonry grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3" style={{ columnGap: '1rem' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {items.map((p, i) => (
               <figure
                 key={p.slug}
@@ -166,16 +166,16 @@ const BrochurePage: React.FC = () => {
                 <div className="text-white text-xl font-semibold mb-4">Add custom card</div>
                 <form onSubmit={addCustomCard} className="space-y-3">
                   <div>
-                    <label className="block text-sm text-gray-300 mb-1">Title</label>
-                    <input value={customTitle} onChange={(e) => setCustomTitle(e.target.value)} className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none" required />
+                    <label className="block text-sm text-gray-300 mb-1" htmlFor="customTitle">Title</label>
+                    <input id="customTitle" value={customTitle} onChange={(e) => setCustomTitle(e.target.value)} className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none" required />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-300 mb-1">Subtitle</label>
-                    <input value={customSubtitle} onChange={(e) => setCustomSubtitle(e.target.value)} className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none" />
+                    <label className="block text-sm text-gray-300 mb-1" htmlFor="customSubtitle">Subtitle</label>
+                    <input id="customSubtitle" value={customSubtitle} onChange={(e) => setCustomSubtitle(e.target.value)} className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none" />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-300 mb-1">Image URL</label>
-                    <input type="url" value={customImage} onChange={(e) => setCustomImage(e.target.value)} className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none" required />
+                    <label className="block text-sm text-gray-300 mb-1" htmlFor="customImage">Image URL</label>
+                    <input id="customImage" type="url" value={customImage} onChange={(e) => setCustomImage(e.target.value)} className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none" required />
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
                     <button type="button" onClick={() => setCustomOpen(false)} className="px-3 py-2 rounded-lg border border-gray-700 text-white">Cancel</button>

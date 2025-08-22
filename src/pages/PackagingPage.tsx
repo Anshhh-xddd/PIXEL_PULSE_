@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import Box1 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-1.jpeg";
-import Box2 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-2.jpeg";
-import Box3 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-3.jpeg";
-import Box4 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-4.jpeg";
-import Box5 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-5.jpeg";
-import Box6 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-6.jpeg";
+// import Box1 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-1.jpe";
+// import Box2 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-2.jpg";
+import Box3 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-3.jpg";
+import Box4 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-4.jpg";
+import Box5 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-5.jpg";
+import Box6 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Box-6.jpg";
 import Almonds6 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 6.jpg";
 import Almonds5 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 5.jpg";
 import Kulfi1 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/Kulfi_packaging (1).jpg";
