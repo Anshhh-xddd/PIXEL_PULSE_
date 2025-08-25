@@ -21,6 +21,7 @@ import VisitingCardPage from './pages/VisitingCardPage';
 import AboutPage from './pages/AboutPage';
 import PortfolioCategoryPage from './pages/PortfolioCategoryPage';
 import AdminStatsPage from './pages/AdminStatsPage';
+import AdminPanel from './pages/AdminPanel';
 
 function ScrollToSectionOnRouteChange() {
   const location = useLocation();
@@ -81,6 +82,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/admin-stats" element={<AdminStatsPage />} />
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </AnimatePresence>
       <Footer />
