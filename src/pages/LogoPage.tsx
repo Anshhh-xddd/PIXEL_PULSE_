@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { sectionByCategory, PortfolioItem } from '../data/portfolio';
+import contentManagementService from '../services/contentManagement';
 import { AnimatePresence, motion } from 'framer-motion';
 import image1 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-1.jpg';
 import image2 from '../Assets/Logo-20250821T104544Z-1-001/Logo/Logo-2.jpg';
@@ -114,7 +115,15 @@ const LogoPage: React.FC = () => {
     );
   });
 
-  const items: PortfolioItem[] = useMemo(() => ([...featured, ...baseItems]), [featured, baseItems]);
+  // Admin-managed items (active Logos) from localStorage
+  const adminLogos = useMemo(() => {
+    return contentManagementService
+      .getPortfolioItems()
+      .filter((i) => (i.status === 'active') && (String(i.category).toLowerCase() === 'logo'));
+  }, []);
+
+  // Compose list: show admin items first (so new content appears immediately), then existing base items
+  const items: any[] = useMemo(() => ([...adminLogos, ...featured, ...baseItems]), [adminLogos, featured, baseItems]);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const close = () => setActiveIndex(null);
@@ -167,7 +176,8 @@ const LogoPage: React.FC = () => {
                         alt={p.title}
                         loading="lazy"
                         decoding="async"
-                        className={`block w-full h-auto ${isJayKhodiyar ? 'object-contain' : 'object-cover'}`}
+                        className={`img-fade block w-full h-auto ${isJayKhodiyar ? 'object-contain' : 'object-cover'}`}
+                        onLoad={(e) => e.currentTarget.classList.add('is-loaded')}
                       />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>

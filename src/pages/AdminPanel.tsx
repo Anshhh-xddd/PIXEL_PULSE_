@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import visitorTracker from '../services/visitorTracking';
 import contentManagementService, { PortfolioItem } from '../services/contentManagement';
+import { sectionByCategory as staticPortfolio } from '../data/portfolio';
 import PortfolioManager from '../components/PortfolioManager';
 import ContentManager from '../components/ContentManager';
 import PersonalManager from '../components/PersonalManager';
@@ -42,6 +43,9 @@ const AdminPanel: React.FC = () => {
   const [contentItems, setContentItems] = useState<any[]>([]);
   const [editingContent, setEditingContent] = useState<any>(null);
   const [contentManagerMode, setContentManagerMode] = useState<'add' | 'edit'>('add');
+  const CONTENT_STORAGE_KEY = 'pixel_pulse_content_items';
+  // Old content removal threshold (days)
+  const [oldContentDays, setOldContentDays] = useState<number>(180);
 
   // Personal section states
   const [personalItems, setPersonalItems] = useState<any[]>([]);
@@ -70,6 +74,14 @@ const AdminPanel: React.FC = () => {
     if (isAuthenticated) {
       updateStats();
       loadPortfolioItems();
+      syncStaticLogosToStorage();
+      // Load content items from storage
+      try {
+        const raw = localStorage.getItem(CONTENT_STORAGE_KEY);
+        setContentItems(raw ? JSON.parse(raw) : []);
+      } catch {
+        setContentItems([]);
+      }
       const interval = setInterval(updateStats, 60000);
       return () => clearInterval(interval);
     }
@@ -83,6 +95,29 @@ const AdminPanel: React.FC = () => {
   const loadPortfolioItems = () => {
     const items = contentManagementService.getPortfolioItems();
     setPortfolioItems(items);
+  };
+
+  // Ensure existing website logos appear in admin panel on first load
+  const syncStaticLogosToStorage = () => {
+    try {
+      const current = contentManagementService.getPortfolioItems();
+      const hasLogos = current.some(i => String(i.category).toLowerCase() === 'logo');
+      const staticLogos: any[] = (staticPortfolio as any).logo || [];
+      if (!hasLogos && Array.isArray(staticLogos) && staticLogos.length > 0) {
+        staticLogos.forEach((s) => {
+          try {
+            contentManagementService.addPortfolioItem({
+              title: s.title || 'Logo',
+              category: 'logo',
+              image: s.image,
+              description: s.subtitle || '',
+              status: 'active'
+            });
+          } catch {}
+        });
+        setPortfolioItems(contentManagementService.getPortfolioItems());
+      }
+    } catch {}
   };
 
   const handleAddItem = () => {
@@ -155,20 +190,61 @@ const AdminPanel: React.FC = () => {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         };
-        setContentItems(prev => [...prev, newContent]);
+        setContentItems(prev => {
+          const next = [...prev, newContent];
+          try { localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(next)); } catch {}
+          return next;
+        });
         showNotification('success', 'Content added successfully');
       } else {
-        setContentItems(prev => prev.map(item => 
-          item.id === editingContent.id 
-            ? { ...item, ...contentData, updatedAt: new Date().toISOString() }
-            : item
-        ));
+        setContentItems(prev => {
+          const next = prev.map(item => 
+            item.id === editingContent.id 
+              ? { ...item, ...contentData, updatedAt: new Date().toISOString() }
+              : item
+          );
+          try { localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(next)); } catch {}
+          return next;
+        });
         showNotification('success', 'Content updated successfully');
       }
       setShowContentManager(false);
     } catch (error) {
       showNotification('error', 'Failed to save content');
     }
+  };
+
+  // Delete a single content item
+  const handleDeleteContent = (id: string) => {
+    if (!id) return;
+    if (window.confirm('Are you sure you want to delete this content item?')) {
+      setContentItems(prev => {
+        const next = prev.filter(item => item.id !== id);
+        try { localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(next)); } catch {}
+        return next;
+      });
+      showNotification('success', 'Content item deleted');
+    }
+  };
+
+  // Remove content items older than a given number of days (default 180)
+  const handleRemoveOldContent = (days: number = 180) => {
+    const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+    setContentItems(prev => {
+      const beforeCount = prev.length;
+      const kept = prev.filter(item => {
+        const refDate = new Date(item.updatedAt || item.createdAt || Date.now()).getTime();
+        return refDate >= cutoff;
+      });
+      const removed = beforeCount - kept.length;
+      if (removed > 0) {
+        showNotification('success', `Removed ${removed} old content item${removed === 1 ? '' : 's'}`);
+      } else {
+        showNotification('success', 'No old content to remove');
+      }
+      try { localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(kept)); } catch {}
+      return kept;
+    });
   };
 
   // Personal management functions
@@ -929,6 +1005,32 @@ const AdminPanel: React.FC = () => {
             <Plus className="w-4 h-4 mr-2" />
             Add Contact
           </button>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-white/10 border border-white/20 rounded-lg px-3 py-2">
+              <span className="text-gray-300 text-sm">Days:</span>
+              <input
+                type="number"
+                min={1}
+                value={oldContentDays}
+                onChange={(e) => setOldContentDays(Math.max(1, Number(e.target.value) || 1))}
+                className="w-20 px-2 py-1 bg-transparent text-white focus:outline-none"
+                aria-label="Old content threshold in days"
+              />
+            </div>
+            <button
+              onClick={() => handleRemoveOldContent(oldContentDays)}
+              className="bg-gradient-to-r from-gray-700 to-black text-white py-2 px-4 rounded-lg hover:from-gray-800 hover:to-black transition-all duration-300 flex items-center"
+            >
+              {(() => {
+                const cutoff = Date.now() - oldContentDays * 24 * 60 * 60 * 1000;
+                const count = contentItems.filter(ci => {
+                  const t = new Date(ci.updatedAt || ci.createdAt || Date.now()).getTime();
+                  return t < cutoff;
+                }).length;
+                return `Remove Old Content (${oldContentDays}+ days, ${count} found)`;
+              })()}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1028,7 +1130,7 @@ const AdminPanel: React.FC = () => {
         >
           <h3 className="text-xl font-semibold text-white mb-4">Recent Content</h3>
           <div className="space-y-3">
-            {contentItems.slice(-5).reverse().map((item) => (
+            {contentItems.slice().reverse().map((item) => (
               <div key={item.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                 <div className="flex items-center space-x-3">
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -1040,6 +1142,7 @@ const AdminPanel: React.FC = () => {
                     {item.type}
                   </span>
                   <span className="text-white text-sm">{item.title}</span>
+                  <span className="text-gray-400 text-xs">{new Date(item.updatedAt || item.createdAt).toLocaleString()}</span>
                 </div>
                 <div className="flex space-x-2">
                   <button
@@ -1048,6 +1151,13 @@ const AdminPanel: React.FC = () => {
                     aria-label="Edit content"
                   >
                     <Edit3 className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteContent(item.id)}
+                    className="p-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors"
+                    aria-label="Delete content"
+                  >
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>

@@ -316,6 +316,17 @@ body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Progressive image reveal for smoother perception of loading */
+.img-fade {
+  opacity: 0;
+  transform: scale(0.99);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+.img-fade.is-loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .smooth-nav:hover {
   background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(249,115,22,0.05));
   border-radius: 8px;

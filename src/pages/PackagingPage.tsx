@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { sectionByCategory, PortfolioItem } from "../data/portfolio";
+import contentManagementService from "../services/contentManagement";
 import { AnimatePresence, motion } from "framer-motion";
 import Brochure from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 5.jpg";
 import Brochure2 from "../Assets/Pakaging-20250821T104552Z-1-001/Pakaging/ALMONDS 6.jpg";
@@ -109,9 +110,15 @@ const PackagingPage: React.FC = () => {
     }
   });
 
+  const adminItems = useMemo(() => {
+    return contentManagementService
+      .getPortfolioItems()
+      .filter(i => (i.status === 'active') && String(i.category).toLowerCase() === 'packaging') as unknown as PortfolioItem[];
+  }, []);
+
   const items: PortfolioItem[] = useMemo(() => {
-    return [...featured, ...customItems, ...baseItems];
-  }, [featured, customItems, baseItems]);
+    return [...adminItems as any[], ...featured, ...customItems, ...baseItems];
+  }, [adminItems, featured, customItems, baseItems]);
 
   const close = () => setActiveIndex(null);
   const next = () =>
@@ -217,7 +224,8 @@ const PackagingPage: React.FC = () => {
                     alt={p.title}
                     loading="lazy"
                     decoding="async"
-                    className="block w-full h-auto object-cover"
+                    className="img-fade block w-full h-auto object-cover"
+                    onLoad={(e) => e.currentTarget.classList.add('is-loaded')}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {/* Remove for customs */}

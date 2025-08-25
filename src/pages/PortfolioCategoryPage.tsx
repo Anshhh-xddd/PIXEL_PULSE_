@@ -1,16 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { sectionByCategory, PortfolioItem } from '../data/portfolio';
+import { sectionByCategory } from '../data/portfolio';
+import contentManagementService from '../services/contentManagement';
 import { AnimatePresence, motion } from 'framer-motion';
+
+const normalizeCategory = (c?: string) => {
+  if (!c) return 'all';
+  // Map older/alternative keys to a consistent form
+  const map: Record<string, string> = {
+    'visiting-card': 'visiting',
+    'ui-ux': 'ui-ux',
+    '3d-design': '3d-design'
+  };
+  return (map[c] || c).toLowerCase();
+};
 
 const PortfolioCategoryPage: React.FC = () => {
   const { category = 'brochure' } = useParams();
-  const items: PortfolioItem[] = (sectionByCategory as any)[category] || [];
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+  // Pull admin-managed items from localStorage and filter by category and active status
+  const serviceItems = useMemo(() => {
+    const all = contentManagementService.getPortfolioItems();
+    const norm = normalizeCategory(category);
+    return all.filter(i => (i.status === 'active') && normalizeCategory(i.category) === norm);
+  }, [category]);
+
+  // Fallback to legacy static data when no admin-managed content exists for this category
+  const legacyItems = (sectionByCategory as any)[category] || [];
+  const usingLegacy = serviceItems.length === 0;
+
   const close = () => setActiveIndex(null);
-  const next = () => setActiveIndex((i) => (i === null ? 0 : (i + 1) % items.length));
-  const prev = () => setActiveIndex((i) => (i === null ? 0 : (i - 1 + items.length) % items.length));
+  const activeListLength = usingLegacy ? legacyItems.length : serviceItems.length;
+  const next = () => setActiveIndex((i) => (i === null ? 0 : (i + 1) % activeListLength));
+  const prev = () => setActiveIndex((i) => (i === null ? 0 : (i - 1 + activeListLength) % activeListLength));
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -39,12 +62,12 @@ const PortfolioCategoryPage: React.FC = () => {
 
           {/* Pinterest-like masonry: multi-column layout with explicit column gap */}
           <div className="columns-1 sm:columns-2 lg:columns-3" style={{ columnGap: '1rem' }}>
-            {items.map((p, i) => {
+            {(usingLegacy ? legacyItems : serviceItems).map((p: any, i: number) => {
               const ratios = ['pt-[72%]','pt-[56%]','pt-[100%]','pt-[130%]'];
               const aspect = ratios[i % ratios.length];
               return (
                 <figure
-                  key={p.slug}
+                  key={p.id || p.slug || `${p.title}-${i}`}
                   role="button"
                   aria-label={`Open ${p.title}`}
                   tabIndex={0}
@@ -57,13 +80,19 @@ const PortfolioCategoryPage: React.FC = () => {
                       src={p.image}
                       alt={p.title}
                       loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      className="img-fade absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      onLoad={(e) => e.currentTarget.classList.add('is-loaded')}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <figcaption className="p-4">
                     <div className="text-white text-lg font-extrabold tracking-tight leading-tight">{p.title}</div>
-                    <div className="mt-0.5 text-orange-400 text-xs font-semibold uppercase tracking-wide">{p.subtitle}</div>
+                    {!usingLegacy && p.description && (
+                      <div className="mt-0.5 text-orange-400 text-xs font-semibold uppercase tracking-wide">{p.description}</div>
+                    )}
+                    {usingLegacy && p.subtitle && (
+                      <div className="mt-0.5 text-orange-400 text-xs font-semibold uppercase tracking-wide">{p.subtitle}</div>
+                    )}
                   </figcaption>
                 </figure>
               );
@@ -72,7 +101,7 @@ const PortfolioCategoryPage: React.FC = () => {
 
           {/* Lightbox */}
           <AnimatePresence>
-            {activeIndex !== null && items[activeIndex] && (
+            {activeIndex !== null && (usingLegacy ? legacyItems[activeIndex] : serviceItems[activeIndex]) && (
               <motion.div
                 key="lightbox"
                 initial={{ opacity: 0 }}
@@ -89,11 +118,15 @@ const PortfolioCategoryPage: React.FC = () => {
                   className="relative max-w-5xl w-full"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <img src={items[activeIndex].image} alt={items[activeIndex].title} className="w-full h-auto rounded-xl border border-gray-800" />
+                  <img src={(usingLegacy ? legacyItems[activeIndex] : serviceItems[activeIndex]).image} alt={(usingLegacy ? legacyItems[activeIndex] : serviceItems[activeIndex]).title} className="w-full h-auto rounded-xl border border-gray-800" />
                   <div className="mt-3 flex items-center justify-between">
                     <div>
-                      <div className="text-white text-lg font-semibold">{items[activeIndex].title}</div>
-                      <div className="text-orange-400 text-sm">{items[activeIndex].subtitle}</div>
+                      <div className="text-white text-lg font-semibold">{(usingLegacy ? legacyItems[activeIndex] : serviceItems[activeIndex]).title}</div>
+                      {usingLegacy ? (
+                        <div className="text-orange-400 text-sm">{legacyItems[activeIndex].subtitle}</div>
+                      ) : (
+                        <div className="text-orange-400 text-sm">{serviceItems[activeIndex].description}</div>
+                      )}
                     </div>
                     <div className="flex gap-2">
                       <button aria-label="Previous" onClick={prev} className="px-3 py-2 rounded-lg border border-gray-700 text-white hover:border-orange-500/50">Prev</button>
