@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
+
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import HomePage from './pages/HomePage';
@@ -19,6 +20,7 @@ import VisitingCardPage from './pages/VisitingCardPage';
 // Removed PortfolioDetailPage
 import AboutPage from './pages/AboutPage';
 import PortfolioCategoryPage from './pages/PortfolioCategoryPage';
+import AdminStatsPage from './pages/AdminStatsPage';
 
 function ScrollToSectionOnRouteChange() {
   const location = useLocation();
@@ -78,6 +80,7 @@ function App() {
           <Route path="/portfolio/category/:category" element={<PortfolioCategoryPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/admin-stats" element={<AdminStatsPage />} />
         </Routes>
       </AnimatePresence>
       <Footer />

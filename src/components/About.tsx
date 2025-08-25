@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Zap, Bot, Globe, Cpu } from 'lucide-react';
+import { Zap, Bot, Globe, Cpu, Instagram, Linkedin, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const About = () => {
   const navigate = useNavigate();
@@ -169,6 +170,79 @@ const About = () => {
             </div>
           </div>
         </div>
+
+        {/* Social Media Section */}
+        <motion.div 
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <motion.h3 
+            className="text-2xl font-bold text-white mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+          >
+            Connect With Us
+          </motion.h3>
+          <motion.p 
+            className="text-gray-300 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
+          >
+            Follow us on social media for the latest updates and design inspiration
+          </motion.p>
+          
+          <motion.div 
+            className="flex justify-center space-x-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.1 }}
+          >
+            {/* Instagram */}
+            <motion.a
+              href="https://www.instagram.com/_pixel_pulse._?igsh=bWdzcm8wZjhidWps"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-4 bg-gradient-to-br from-gray-800/60 to-gray-900/60 hover:from-pink-500/20 hover:to-purple-500/20 border border-gray-700/50 hover:border-pink-500/50 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-pink-500/25"
+              whileHover={{ scale: 1.1, rotateY: 5 }}
+              whileTap={{ scale: 0.95 }}
+              title="Follow us on Instagram"
+            >
+              <div className="text-gray-300 group-hover:text-pink-400 transition-colors duration-300">
+                <Instagram size={24} />
+              </div>
+            </motion.a>
+
+            {/* LinkedIn */}
+            <motion.a
+              href="#"
+              className="group p-4 bg-gradient-to-br from-gray-800/60 to-gray-900/60 hover:from-blue-500/20 hover:to-blue-600/20 border border-gray-700/50 hover:border-blue-500/50 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25"
+              whileHover={{ scale: 1.1, rotateY: 5 }}
+              whileTap={{ scale: 0.95 }}
+              title="Connect on LinkedIn"
+            >
+              <div className="text-gray-300 group-hover:text-blue-400 transition-colors duration-300">
+                <Linkedin size={24} />
+              </div>
+            </motion.a>
+
+            {/* Email */}
+            <motion.a
+              href="mailto:pixelpulse2905@gmail.com"
+              className="group p-4 bg-gradient-to-br from-gray-800/60 to-gray-900/60 hover:from-orange-500/20 hover:to-red-500/20 border border-gray-700/50 hover:border-orange-500/50 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-orange-500/25"
+              whileHover={{ scale: 1.1, rotateY: 5 }}
+              whileTap={{ scale: 0.95 }}
+              title="Send us an email"
+            >
+              <div className="text-gray-300 group-hover:text-orange-400 transition-colors duration-300">
+                <Mail size={24} />
+              </div>
+            </motion.a>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
