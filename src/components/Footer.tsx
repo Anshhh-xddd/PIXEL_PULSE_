@@ -1,9 +1,12 @@
 import React from 'react';
 import { Linkedin, Instagram, Mail, Phone, MapPin, ArrowUp, Heart, Zap, Sparkles, Globe, Users, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import Pixel_Pulse from '../Assets/Logo.png';
 
 const Footer = () => {
+  const location = useLocation();
+  
   const scrollToSection = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const section = document.getElementById(id);
@@ -48,10 +51,10 @@ Best regards,
   ];
 
   const quickLinks = [
-    { label: 'About Us', id: 'about' },
-    { label: 'Our Portfolio', id: 'portfolio' },
-    { label: 'Contact Us', id: 'contact' },
-    { label: 'Services', id: 'services' }
+    { label: 'About Us', id: 'about', path: '/about' },
+    { label: 'Our Portfolio', id: 'portfolio', path: '/portfolio' },
+    { label: 'Contact Us', id: 'contact', path: '/contact' },
+    { label: 'Services', id: 'services', path: '/services' }
   ];
 
   const socialLinks = [
@@ -87,6 +90,11 @@ Best regards,
       }
     }
   };
+
+  // Hide footer on contact page and main page
+  if (location.pathname === '/contact' || location.pathname === '/') {
+    return null;
+  }
 
   return (
     <footer className="bg-black text-white relative overflow-hidden">
@@ -166,6 +174,25 @@ Best regards,
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+        {/* Current Page Indicator */}
+        <motion.div 
+          className="mb-8 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30 rounded-full">
+            <motion.div
+              className="w-2 h-2 bg-orange-500 rounded-full"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+            <span className="text-orange-400 font-medium text-sm">
+              Currently viewing: {location.pathname === '/' ? 'Home' : location.pathname.split('/').pop()?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Page'}
+            </span>
+          </div>
+        </motion.div>
+
         {/* Main Footer Content */}
         <motion.div 
           className="py-16 sm:py-20 md:py-24 lg:py-32"
@@ -305,6 +332,16 @@ Best regards,
                 data-animation="text-fill"
               >
                 Our Services
+                {location.pathname.includes('/portfolio/') && (
+                  <motion.div
+                    className="text-sm text-orange-400 font-normal mt-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    Viewing {location.pathname.split('/').pop()?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} Portfolio
+                  </motion.div>
+                )}
               </motion.h4>
                              <motion.ul 
                  className="space-y-3"
@@ -367,21 +404,37 @@ Best regards,
                 data-animation="stagger"
                 data-stagger="0.1"
               >
-                {quickLinks.map((link, index) => (
-                  <motion.li 
-                    key={index}
-                    data-animation="slide"
-                    data-direction="left"
-                  >
-                                         <a
-                       href={`#${link.id}`}
-                       onClick={scrollToSection(link.id)}
-                       className="text-gray-300 hover:text-orange-500 transition-colors duration-300 cursor-pointer text-sm sm:text-base font-normal"
-                     >
-                       {link.label}
-                     </a>
-                  </motion.li>
-                ))}
+                {quickLinks.map((link, index) => {
+                  const isActive = location.pathname === link.path;
+                  return (
+                    <motion.li 
+                      key={index}
+                      data-animation="slide"
+                      data-direction="left"
+                    >
+                      <a
+                        href={link.path}
+                        className={`text-sm sm:text-base font-normal cursor-pointer transition-all duration-300 p-2 rounded-lg ${
+                          isActive 
+                            ? 'text-orange-500 bg-orange-500/10 border border-orange-500/30 shadow-lg shadow-orange-500/20' 
+                            : 'text-gray-300 hover:text-orange-500 hover:bg-orange-500/5 border border-transparent hover:border-orange-500/20'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span>{link.label}</span>
+                          {isActive && (
+                            <motion.div
+                              className="w-2 h-2 bg-orange-500 rounded-full"
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ duration: 0.3 }}
+                            />
+                          )}
+                        </div>
+                      </a>
+                    </motion.li>
+                  );
+                })}
               </motion.ul>
 
               {/* Features */}

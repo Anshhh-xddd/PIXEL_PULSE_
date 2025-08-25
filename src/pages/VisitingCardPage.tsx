@@ -119,7 +119,7 @@ const VisitingCardPage: React.FC = () => {
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-white text-3xl md:text-4xl font-extrabold">Brochure Design</h1>
             <div className="flex items-center gap-3">
-              <a href="/portfolio" className="text-orange-400 underline">← Back</a>
+            <a href="/portfolio" className="text-orange-400 underline">← Back</a>
             </div>
           </div>
 
@@ -147,8 +147,8 @@ const VisitingCardPage: React.FC = () => {
                   {/* Remove for customs */}
                   {customItems.find(ci => ci.slug === p.slug) && (
                     <button onClick={(e) => { e.stopPropagation(); removeCustom(p.slug); }} className="absolute top-2 right-2 text-xs px-2 py-1 rounded bg-black/70 text-white border border-gray-700 hover:border-red-400">Remove</button>
-                  )}
-                </div>
+              )}
+            </div>
                 <figcaption className="p-4">
                   <div className="text-white text-lg font-semibold leading-tight">{p.title}</div>
                   <div className="text-gray-400 text-xs font-medium mt-0.5">{p.subtitle}</div>
@@ -166,7 +166,7 @@ const VisitingCardPage: React.FC = () => {
               </figure>
             ))}
           </div>
-        </div>
+          </div>
 
         {/* Add Custom Modal */}
         <AnimatePresence>
@@ -182,7 +182,7 @@ const VisitingCardPage: React.FC = () => {
                   <div>
                     <label className="block text-sm text-gray-300 mb-1" htmlFor="customSubtitle">Subtitle</label>
                     <input id="customSubtitle" value={customSubtitle} onChange={(e) => setCustomSubtitle(e.target.value)} className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none" />
-                  </div>
+                    </div>
                   <div>
                     <label className="block text-sm text-gray-300 mb-1" htmlFor="customImage">Image URL</label>
                     <input id="customImage" type="url" value={customImage} onChange={(e) => setCustomImage(e.target.value)} className="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-orange-500 outline-none" required />
@@ -190,7 +190,7 @@ const VisitingCardPage: React.FC = () => {
                   <div className="flex justify-end gap-2 pt-2">
                     <button type="button" onClick={() => setCustomOpen(false)} className="px-3 py-2 rounded-lg border border-gray-700 text-white">Cancel</button>
                     <button type="submit" className="px-3 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 text-black font-semibold">Add</button>
-                  </div>
+                      </div>
                 </form>
               </motion.div>
             </motion.div>
@@ -221,13 +221,13 @@ const VisitingCardPage: React.FC = () => {
                   <div>
                     <div className="text-white text-lg font-semibold">{items[activeIndex].title}</div>
                     <div className="text-orange-400 text-sm">{items[activeIndex].subtitle}</div>
-                  </div>
+              </div>
                   <div className="flex gap-2">
                     <button aria-label="Previous" onClick={prev} className="px-3 py-2 rounded-lg border border-gray-700 text-white hover:border-orange-500/50">Prev</button>
                     <button aria-label="Next" onClick={next} className="px-3 py-2 rounded-lg border border-gray-700 text-white hover:border-orange-500/50">Next</button>
                     <button aria-label="Close" onClick={close} className="px-3 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 text-black font-semibold">Close</button>
-                  </div>
-                </div>
+          </div>
+        </div>
               </motion.div>
             </motion.div>
           )}
