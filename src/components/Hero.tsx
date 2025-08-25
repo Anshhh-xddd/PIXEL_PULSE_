@@ -241,11 +241,11 @@ const Hero = () => {
                   "blur(0px) brightness(1)",
                   "blur(0px) brightness(1.2)"
                 ]),
-                x: useTransform(mouseX, [0, window.innerWidth], [-20, 20]),
-                y: useTransform(mouseY, [0, window.innerHeight], [-10, 10]),
-                rotateY: useTransform(mouseX, [0, window.innerWidth], [-15, 15]),
-                rotateX: useTransform(mouseY, [0, window.innerHeight], [15, -15]),
-                scale: useTransform(mouseX, [0, window.innerWidth], [1, 1.1])
+                // x: useTransform(mouseX, [0, window.innerWidth], [-20, 20]),
+                // y: useTransform(mouseY, [0, window.innerHeight], [-10, 10]),
+                // rotateY: useTransform(mouseX, [0, window.innerWidth], [-15, 15]),
+                // rotateX: useTransform(mouseY, [0, window.innerHeight], [15, -15]),
+                // scale: useTransform(mouseX, [0, window.innerWidth], [1, 1.1])
               }}
             >
               That Think,
