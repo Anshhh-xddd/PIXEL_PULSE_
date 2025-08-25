@@ -653,7 +653,7 @@ Best regards,
 
             {/* LinkedIn */}
             <motion.a
-              href="#"
+              href="https://www.linkedin.com/in/pixel-pulse-9a27aa380"
               className="group p-4 bg-gradient-to-br from-gray-800/60 to-gray-900/60 hover:from-blue-500/20 hover:to-blue-600/20 border border-gray-700/50 hover:border-blue-500/50 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25"
               whileHover={{ scale: 1.1, rotateY: 5 }}
               whileTap={{ scale: 0.95 }}

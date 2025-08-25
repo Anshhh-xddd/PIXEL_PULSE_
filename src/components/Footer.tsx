@@ -59,7 +59,7 @@ Best regards,
 
   const socialLinks = [
     { icon: <Instagram size={20} />, href: 'https://www.instagram.com/_pixel_pulse._?igsh=bWdzcm8wZjhidWps', label: 'Instagram' },
-    { icon: <Linkedin size={20} />, href: '#', label: 'LinkedIn' },
+    { icon: <Linkedin size={20} />, href: 'https://www.linkedin.com/in/pixel-pulse-9a27aa380', label: 'LinkedIn' },
     { icon: <Mail size={20} />, href: 'mailto:pixelpulse2905@gmail.com', label: 'Email' }
   ];
 
